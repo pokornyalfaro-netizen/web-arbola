@@ -43,19 +43,15 @@ a { text-decoration: none; color: inherit; }
 
 .logo { display: flex; align-items: center; }
 
-.logo-img {
-  height: 44px;
-  width: auto;
-  transition: opacity .3s;
-}
+.logo-img { height: 44px; width: auto; }
 
-/* Sobre el hero oscuro: mostrar solo el símbolo */
-.logo-dark  { display: block; }
-.logo-light { display: none; }
+/* Hero oscuro: logo blanco */
+.logo-on-dark  { display: block; }
+.logo-on-light { display: none; }
 
-/* Al hacer scroll: mostrar logo completo color */
-.navbar.scrolled .logo-dark  { display: none; }
-.navbar.scrolled .logo-light { display: block; }
+/* Scrolled: logo oficial color */
+.navbar.scrolled .logo-on-dark  { display: none; }
+.navbar.scrolled .logo-on-light { display: block; }
 
 .nav-links { display: flex; align-items: center; gap: 2.5rem; }
 .nav-links a {
