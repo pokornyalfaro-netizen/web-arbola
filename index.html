@@ -217,7 +217,7 @@
 
     // CAPAS DE PROFUNDIDAD: layer 0 = lejos (pequeño, lento, transparente) → layer 2 = cerca (grande, rápido, opaco)
     function makeElement(type, layer) {
-      const speed  = [0.3, 0.9, 1.8][layer];
+      const speed  = [0.005, 0.012, 0.022][layer];
       const scale  = [0.4, 0.7, 1.0][layer];
       const alpha  = [0.12, 0.22, 0.38][layer];
       return {
