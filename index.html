@@ -217,7 +217,7 @@
 
     // CAPAS DE PROFUNDIDAD: layer 0 = lejos (pequeño, lento, transparente) → layer 2 = cerca (grande, rápido, opaco)
     function makeElement(type, layer) {
-      const speed  = [0.005, 0.012, 0.022][layer];
+      const speed  = [0.025, 0.045, 0.07][layer];
       const scale  = [0.4, 0.7, 1.0][layer];
       const alpha  = [0.12, 0.22, 0.38][layer];
       return {
@@ -229,10 +229,10 @@
         w: rnd(60, 140) * scale, h: rnd(7, 13) * scale, fill: rnd(0.2, 0.95), fillDir: Math.random() > 0.5 ? 1 : -1,  // gantt
         r: rnd(18, 40) * scale, progress: rnd(0.2, 0.9),                            // donut / arc
         pSlices: [rnd(10,35), rnd(10,35), rnd(10,35), rnd(10,35)],                  // pie
-        len: rnd(30, 65) * scale, rot: rnd(0, Math.PI*2), vrot: rnd(-0.002,0.002),  // arrow
+        len: rnd(30, 65) * scale, rot: rnd(0, Math.PI*2), vrot: rnd(-0.003,0.003),  // arrow
         size: rnd(14, 30) * scale,                                                   // check / kpi
         tlW: rnd(80,180)*scale, rows: (function(){ const n = Math.floor(rnd(2,5)); const a = []; for (let i=0;i<n;i++) a.push({ progress: rnd(0.15,0.85), dir: Math.random()>0.5?1:-1, jade: Math.random()>0.5 }); return a; })(),  // timeline
-        speed: rnd(0.0003, 0.0008), dir: Math.random() > 0.5 ? 1 : -1,
+        speed: rnd(0.0008, 0.0014), dir: Math.random() > 0.5 ? 1 : -1,
       };
     }
 
@@ -368,7 +368,7 @@
         }
 
         // Limitar velocidad por capa
-        const maxSpd = [0.01, 0.025, 0.045][e.layer];
+        const maxSpd = [0.04, 0.07, 0.11][e.layer];
         const spd = Math.sqrt(e.vx*e.vx + e.vy*e.vy);
         if (spd > maxSpd) { e.vx = (e.vx/spd)*maxSpd; e.vy = (e.vy/spd)*maxSpd; }
 
@@ -378,12 +378,12 @@
 
         if (e.type === 'arrow') e.rot += e.vrot;
         if (e.type === 'gantt') {
-          e.fill += 0.0003 * e.fillDir;
+          e.fill += 0.0008 * e.fillDir;
           if (e.fill > 0.97 || e.fill < 0.05) e.fillDir *= -1;
         }
         if (e.type === 'timeline') {
           e.rows.forEach(row => {
-            row.progress += 0.0003 * row.dir;
+            row.progress += 0.0008 * row.dir;
             if (row.progress > 0.95 || row.progress < 0.1) row.dir *= -1;
           });
         }
