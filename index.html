@@ -370,7 +370,7 @@
         }
 
         // Limitar velocidad por capa
-        const maxSpd = [0.2, 0.5, 0.9][e.layer];
+        const maxSpd = [0.01, 0.025, 0.045][e.layer];
         const spd = Math.sqrt(e.vx*e.vx + e.vy*e.vy);
         if (spd > maxSpd) { e.vx = (e.vx/spd)*maxSpd; e.vy = (e.vy/spd)*maxSpd; }
 
