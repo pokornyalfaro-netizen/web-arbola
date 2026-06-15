@@ -380,7 +380,7 @@
 
         if (e.type === 'arrow') e.rot += e.vrot;
         if (e.type === 'donut') {
-          e.progress += e.speed * e.dir;
+          e.progress += (e.speed / 7) * e.dir;
           if (e.progress > 0.98 || e.progress < 0.05) e.dir *= -1;
         }
 
