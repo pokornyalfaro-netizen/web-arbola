@@ -41,34 +41,21 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 1px 0 var(--borde);
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
+.logo { display: flex; align-items: center; }
+
+.logo-img {
+  height: 44px;
+  width: auto;
+  transition: opacity .3s;
 }
-.logo-name {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  color: var(--blanco);
-  transition: color .3s;
-}
-.logo-rule {
-  width: 1px;
-  height: 20px;
-  background: rgba(255,255,255,.35);
-  transition: background .3s;
-}
-.logo-desc {
-  font-size: .75rem;
-  font-weight: 400;
-  letter-spacing: 1px;
-  color: rgba(255,255,255,.65);
-  transition: color .3s;
-}
-.navbar.scrolled .logo-name { color: var(--azul); }
-.navbar.scrolled .logo-rule { background: var(--borde); }
-.navbar.scrolled .logo-desc { color: var(--gris); }
+
+/* Sobre el hero oscuro: mostrar solo el símbolo */
+.logo-dark  { display: block; }
+.logo-light { display: none; }
+
+/* Al hacer scroll: mostrar logo completo color */
+.navbar.scrolled .logo-dark  { display: none; }
+.navbar.scrolled .logo-light { display: block; }
 
 .nav-links { display: flex; align-items: center; gap: 2.5rem; }
 .nav-links a {
