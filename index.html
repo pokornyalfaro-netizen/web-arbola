@@ -231,7 +231,8 @@
         // propiedades por tipo
         w: rnd(60, 140) * scale, h: rnd(7, 13) * scale, fill: rnd(0.2, 0.95), fillDir: Math.random() > 0.5 ? 1 : -1,  // gantt
         r: rnd(18, 40) * scale, progress: rnd(0.2, 0.9),                            // donut / arc
-        pSlices: [rnd(10,35), rnd(10,35), rnd(10,35), rnd(10,35)],                  // pie
+        pSlices: (function(){ const n = 3 + Math.floor(Math.random()*3); const a=[]; for (let i=0;i<n;i++) a.push(rnd(8,30)); return a; })(),  // pie: 3-5 porciones variadas
+        pieC: [C.naranja, C.teal, C.jade, C.crema].sort(() => Math.random() - 0.5),  // orden de color distinto por pie
         pieRot: rnd(0, Math.PI*2), pieVr: rnd(0.0009, 0.0022) * (Math.random() > 0.5 ? 1 : -1),  // giro del pie
         len: rnd(30, 65) * scale, rot: rnd(0, Math.PI*2), vrot: rnd(-0.003,0.003),  // arrow
         size: rnd(14, 30) * scale,                                                   // check / kpi
@@ -279,20 +280,21 @@
 
     function drawPie(e) {
       const total = e.pSlices.reduce((a,b) => a+b, 0);
-      const pieC  = [C.naranja, C.teal, C.jade, C.crema];
+      const ringR = e.r * 0.72;            // radio del anillo (donut)
       let angle = e.pieRot;
-      ctx.save(); ctx.globalAlpha = e.alpha;
+      ctx.save();
+      ctx.globalAlpha = e.alpha;
+      ctx.lineWidth = e.r * 0.5;           // grosor del anillo
+      ctx.lineCap = 'butt';
       e.pSlices.forEach((s, i) => {
         const sweep = (s/total) * Math.PI * 2;
-        ctx.fillStyle = pieC[i];
-        ctx.beginPath(); ctx.moveTo(e.x, e.y);
-        ctx.arc(e.x, e.y, e.r, angle, angle + sweep);
-        ctx.closePath(); ctx.fill();
+        const g = Math.min(0.05, sweep * 0.25);   // separacion, sin invertir porciones chicas
+        ctx.strokeStyle = e.pieC[i % e.pieC.length];
+        ctx.beginPath();
+        ctx.arc(e.x, e.y, ringR, angle + g, angle + sweep - g);
+        ctx.stroke();
         angle += sweep;
       });
-      // hole
-      ctx.fillStyle = '#1a3340';
-      ctx.beginPath(); ctx.arc(e.x, e.y, e.r * 0.5, 0, Math.PI*2); ctx.fill();
       ctx.restore();
     }
 
