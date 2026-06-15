@@ -546,12 +546,12 @@ strong { font-weight: 600; }
 /* CTA de agendar en contacto */
 .contact-book {
   max-width: 640px;
-  margin: 2.5rem auto 0;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,.15);
+  margin: 2rem auto 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255,255,255,.15);
 }
 .contact-book-label {
-  margin: 0 auto 1.1rem !important;
+  margin: 1rem auto 0 !important;
   font-size: .9rem;
   color: rgba(255,255,255,.65) !important;
   max-width: 440px;

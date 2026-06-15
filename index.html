@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
 
@@ -175,6 +175,11 @@
       <h2>Hablemos de tu empresa</h2>
       <p class="contact-lead">Contanos la situación actual de tu empresa y los objetivos que querés alcanzar.<br>¡Estamos para acompañarte!</p>
 
+      <div class="contact-book">
+        <a href="#contacto" class="btn btn-fill-white" data-booking>📅 Agendá una reunión</a>
+        <p class="contact-book-label">Reservá un encuentro exploratorio en el día y horario que prefieras.</p>
+      </div>
+
       <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/hola@arbola.com.ar" method="POST">
         <input type="hidden" name="_subject" value="Nuevo contacto desde la web de ÁRBOLA">
         <input type="hidden" name="_template" value="table">
@@ -211,11 +216,6 @@
         <button type="submit" class="btn btn-fill-white form-submit" id="formSubmit">Enviar mensaje</button>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
-
-      <div class="contact-book">
-        <p class="contact-book-label">¿Preferís coordinarlo en una reunión? Es opcional — si querés, agendá un encuentro exploratorio.</p>
-        <a href="#contacto" class="btn btn-ghost-white" data-booking>📅 Agendar una reunión</a>
-      </div>
 
       <div class="contact-alt">
         <span>O escribinos directo:</span>
