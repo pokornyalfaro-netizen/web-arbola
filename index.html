@@ -220,7 +220,7 @@
 
     // CAPAS DE PROFUNDIDAD: layer 0 = lejos (pequeño, lento, transparente) → layer 2 = cerca (grande, rápido, opaco)
     function makeElement(type, layer) {
-      const speed  = [0.025, 0.045, 0.07][layer];
+      const speed  = [0.07, 0.12, 0.18][layer];
       const scale  = [0.4, 0.7, 1.0][layer];
       const alpha  = [0.12, 0.22, 0.38][layer];
       return {
@@ -381,7 +381,7 @@
 
       elements.forEach(e => {
         // Deriva ambiente (lenta y calma)
-        const maxSpd = [0.04, 0.07, 0.11][e.layer];
+        const maxSpd = [0.10, 0.16, 0.24][e.layer];
         const spd = Math.sqrt(e.vx*e.vx + e.vy*e.vy);
         if (spd > maxSpd) { e.vx = (e.vx/spd)*maxSpd; e.vy = (e.vy/spd)*maxSpd; }
         e.x += e.vx; e.y += e.vy;
