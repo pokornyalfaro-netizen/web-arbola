@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body>
 
@@ -110,23 +110,23 @@
       <div class="sec-label sec-label-light">Qué hacemos</div>
       <h2>Soluciones para cada etapa de tu empresa</h2>
       <div class="service-grid">
-        <div class="service-card">
+        <div class="service-card" data-service="01" role="button" tabindex="0">
           <span class="service-num">01</span>
           <h3>Gestión y procesos</h3>
           <p>Organizamos y optimizamos los procesos internos de tu empresa para que opere con mayor eficiencia y orden.</p>
-          <a href="#contacto" class="card-link">Saber más →</a>
+          <span class="card-link">Saber más →</span>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="02" role="button" tabindex="0">
           <span class="service-num">02</span>
           <h3>Dirección de proyectos</h3>
           <p>Implementamos herramientas de planificación y control para que tus obras se ejecuten en tiempo y forma.</p>
-          <a href="#contacto" class="card-link">Saber más →</a>
+          <span class="card-link">Saber más →</span>
         </div>
-        <div class="service-card">
+        <div class="service-card" data-service="03" role="button" tabindex="0">
           <span class="service-num">03</span>
           <h3>Capacitación</h3>
           <p>Charlas y formación individual para dueños y profesionales en liderazgo, planificación y gestión de proyectos.</p>
-          <a href="#contacto" class="card-link">Saber más →</a>
+          <span class="card-link">Saber más →</span>
         </div>
       </div>
     </div>
@@ -246,6 +246,19 @@
       <button class="booking-close" type="button" data-booking-close aria-label="Cerrar">&times;</button>
       <iframe id="bookingFrame" title="Agendá una reunión con ÁRBOLA" loading="lazy"></iframe>
       <a class="booking-fallback" href="https://calendar.app.google/tUJkov3j9fUSfVse8" target="_blank" rel="noopener">¿No carga el calendario? Abrilo en una pestaña nueva ↗</a>
+    </div>
+  </div>
+
+  <!-- MODAL DETALLE DE SERVICIOS -->
+  <div class="info-modal" id="serviceModal" aria-hidden="true">
+    <div class="info-backdrop" data-info-close></div>
+    <div class="info-dialog" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+      <button class="info-close" type="button" data-info-close aria-label="Cerrar">&times;</button>
+      <span class="service-num" id="serviceModalNum"></span>
+      <h3 id="serviceModalTitle"></h3>
+      <p id="serviceModalDesc"></p>
+      <ul id="serviceModalList"></ul>
+      <a href="#contacto" class="btn btn-fill" data-info-close>Agendá una reunión</a>
     </div>
   </div>
 
@@ -587,6 +600,78 @@
         b.addEventListener('click', e => { e.preventDefault(); openModal(); }));
       modal.querySelectorAll('[data-booking-close]').forEach(b =>
         b.addEventListener('click', closeModal));
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+    })();
+  </script>
+
+  <script>
+    // ── MODAL DETALLE DE SERVICIOS ──
+    (function() {
+      const modal = document.getElementById('serviceModal');
+      if (!modal) return;
+      const data = {
+        '01': {
+          title: 'Gestión y procesos',
+          desc: 'Ponemos orden en el día a día de tu empresa: definimos cómo se trabaja, quién hace qué y cómo se mide, para que todo funcione con eficiencia y previsibilidad.',
+          items: [
+            'Relevamiento y mapeo de los procesos actuales',
+            'Definición de roles, responsabilidades y flujos de trabajo',
+            'Estandarización y documentación de procedimientos',
+            'Indicadores de gestión (KPIs) para medir y mejorar',
+            'Implementación de herramientas de organización y seguimiento'
+          ]
+        },
+        '02': {
+          title: 'Dirección de proyectos',
+          desc: 'Llevamos tus obras y proyectos a buen puerto con planificación y control profesionales, para cumplir plazos, costos y calidad.',
+          items: [
+            'Planificación de obra: cronogramas, hitos y recursos',
+            'Control de avance, costos y desvíos',
+            'Gestión de riesgos y soporte a la toma de decisiones',
+            'Coordinación de equipos, proveedores y contratistas',
+            'Reportes claros para la dirección'
+          ]
+        },
+        '03': {
+          title: 'Capacitación',
+          desc: 'Formamos a dueños, mandos y equipos para que la profesionalización quede instalada en tu empresa y no dependa de nosotros.',
+          items: [
+            'Talleres a medida para tu equipo',
+            'Formación en planificación y gestión de proyectos',
+            'Liderazgo y comunicación para mandos',
+            'Acompañamiento individual (mentoring) a dueños y profesionales',
+            'Material y herramientas prácticas para aplicar desde el día uno'
+          ]
+        }
+      };
+      const numEl = document.getElementById('serviceModalNum');
+      const titleEl = document.getElementById('serviceModalTitle');
+      const descEl = document.getElementById('serviceModalDesc');
+      const listEl = document.getElementById('serviceModalList');
+      function openService(id) {
+        const s = data[id]; if (!s) return;
+        numEl.textContent = id;
+        titleEl.textContent = s.title;
+        descEl.textContent = s.desc;
+        listEl.innerHTML = s.items.map(i => '<li>' + i + '</li>').join('');
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      document.querySelectorAll('[data-service]').forEach(card => {
+        card.addEventListener('click', () => openService(card.getAttribute('data-service')));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openService(card.getAttribute('data-service')); }
+        });
+      });
+      modal.querySelectorAll('[data-info-close]').forEach(b => b.addEventListener('click', closeModal));
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
       });

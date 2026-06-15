@@ -617,6 +617,88 @@ strong { font-weight: 600; }
 }
 .booking-fallback:hover { color: var(--naranja); }
 
+/* ─── MODAL DETALLE DE SERVICIOS ─── */
+.service-card { cursor: pointer; }
+.info-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.info-modal.open { display: flex; }
+.info-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+}
+.info-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 2.6rem 2.5rem 2.5rem;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+  animation: bookingIn .25s ease;
+}
+.info-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  width: 36px; height: 36px;
+  border: none;
+  background: rgba(0,0,0,.05);
+  color: var(--gris);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s;
+}
+.info-close:hover { background: rgba(0,0,0,.12); }
+.info-dialog .service-num {
+  display: block;
+  font-size: .8rem;
+  letter-spacing: 2px;
+  margin-bottom: .5rem;
+}
+.info-dialog h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--azul);
+  line-height: 1.2;
+  margin-bottom: .8rem;
+}
+.info-dialog > p {
+  color: var(--gris);
+  margin-bottom: 1.4rem;
+}
+.info-dialog ul {
+  list-style: none;
+  margin: 0 0 1.9rem;
+  padding: 0;
+}
+.info-dialog li {
+  position: relative;
+  padding-left: 1.7rem;
+  margin-bottom: .65rem;
+  color: var(--gris);
+  font-size: .95rem;
+  line-height: 1.5;
+}
+.info-dialog li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--jade);
+  font-weight: 700;
+}
+
 /* ─── FOOTER ─── */
 .footer {
   background: var(--negro);
