@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
 
@@ -48,7 +48,7 @@
       <h1>Juntos, profesionalizamos tu empresa</h1>
       <p class="hero-sub">Transformamos la gestión de PyMEs de la construcción en una herramienta real de crecimiento, con mayor previsibilidad y solidez.</p>
       <div class="hero-actions">
-        <a href="#contacto" class="btn btn-fill">Agenda una reunión</a>
+        <a href="#contacto" class="btn btn-fill" data-booking>Agenda una reunión</a>
         <a href="#diagnostico" class="btn btn-ghost">Conocé el diagnóstico →</a>
       </div>
     </div>
@@ -175,6 +175,11 @@
       <h2>Hablemos de tu empresa</h2>
       <p class="contact-lead">Contanos la situación actual de tu empresa y los objetivos que querés alcanzar.<br>¡Estamos para acompañarte!</p>
 
+      <div class="contact-book">
+        <a href="#contacto" class="btn btn-fill-white" data-booking>📅 Agendá una reunión</a>
+        <span class="contact-or">— o dejanos tu consulta —</span>
+      </div>
+
       <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/hola@arbola.com.ar" method="POST">
         <input type="hidden" name="_subject" value="Nuevo contacto desde la web de ÁRBOLA">
         <input type="hidden" name="_template" value="table">
@@ -239,6 +244,16 @@
       <a href="https://instagram.com/somosarbola" target="_blank">@somosarbola</a>
     </div>
   </footer>
+
+  <!-- MODAL AGENDAR REUNIÓN (Google Calendar) -->
+  <div class="booking-modal" id="bookingModal" aria-hidden="true">
+    <div class="booking-backdrop" data-booking-close></div>
+    <div class="booking-dialog" role="dialog" aria-modal="true" aria-label="Agendar una reunión con ÁRBOLA">
+      <button class="booking-close" type="button" data-booking-close aria-label="Cerrar">&times;</button>
+      <iframe id="bookingFrame" title="Agendá una reunión con ÁRBOLA" loading="lazy"></iframe>
+      <a class="booking-fallback" href="https://calendar.app.google/tUJkov3j9fUSfVse8" target="_blank" rel="noopener">¿No carga el calendario? Abrilo en una pestaña nueva ↗</a>
+    </div>
+  </div>
 
   <script>
     // ── CANVAS HERO — GESTIÓN DE PROYECTOS ──
@@ -553,6 +568,35 @@
         }
       });
     }
+  </script>
+
+  <script>
+    // ── MODAL AGENDAR REUNIÓN (carga el calendario de Google al abrir) ──
+    (function() {
+      const modal = document.getElementById('bookingModal');
+      if (!modal) return;
+      const frame = document.getElementById('bookingFrame');
+      const SRC = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ39_91lis3t-kjBYg1dqT0jGB7Yl3M0lujw7iFwyegwsBNQg_26tJ0Ib9vuWO1b7AltOV0bzCMX?gv=true';
+      let loaded = false;
+      function openModal() {
+        if (!loaded) { frame.src = SRC; loaded = true; }
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      document.querySelectorAll('[data-booking]').forEach(b =>
+        b.addEventListener('click', e => { e.preventDefault(); openModal(); }));
+      modal.querySelectorAll('[data-booking-close]').forEach(b =>
+        b.addEventListener('click', closeModal));
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+    })();
   </script>
 </body>
 </html>

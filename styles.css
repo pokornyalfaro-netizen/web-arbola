@@ -543,6 +543,77 @@ strong { font-weight: 600; }
 .contact-alt a { color: var(--blanco); text-decoration: none; font-weight: 500; }
 .contact-alt a:hover { color: var(--teal); }
 
+/* CTA de agendar en contacto */
+.contact-book { margin-top: .5rem; }
+.contact-or {
+  display: block;
+  margin: 1.6rem auto .2rem;
+  font-size: .82rem;
+  letter-spacing: .5px;
+  color: rgba(255,255,255,.5);
+}
+
+/* ─── MODAL AGENDAR REUNIÓN ─── */
+.booking-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.booking-modal.open { display: flex; }
+.booking-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+}
+.booking-dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 760px;
+  height: min(86vh, 760px);
+  background: var(--blanco);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+  animation: bookingIn .25s ease;
+}
+@keyframes bookingIn {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+.booking-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  z-index: 2;
+  width: 36px; height: 36px;
+  border: none;
+  background: rgba(0,0,0,.06);
+  color: var(--gris);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s;
+}
+.booking-close:hover { background: rgba(0,0,0,.12); }
+.booking-dialog iframe { flex: 1; width: 100%; border: 0; }
+.booking-fallback {
+  display: block;
+  text-align: center;
+  padding: .7rem;
+  font-size: .82rem;
+  color: var(--gris);
+  text-decoration: none;
+  border-top: 1px solid var(--borde);
+}
+.booking-fallback:hover { color: var(--naranja); }
+
 /* ─── FOOTER ─── */
 .footer {
   background: var(--negro);
