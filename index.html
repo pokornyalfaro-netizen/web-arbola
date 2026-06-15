@@ -236,6 +236,7 @@
         size: rnd(14, 30) * scale,                                                   // check / kpi
         tlW: rnd(80,180)*scale, rows: (function(){ const n = Math.floor(rnd(2,5)); const a = []; for (let i=0;i<n;i++) a.push({ progress: rnd(0.15,0.85), dir: Math.random()>0.5?1:-1, jade: Math.random()>0.5 }); return a; })(),  // timeline
         speed: rnd(0.0008, 0.0014), dir: Math.random() > 0.5 ? 1 : -1,
+        pushX: 0, pushY: 0,
       };
     }
 
@@ -360,24 +361,28 @@
       elements.sort((a, b) => a.layer - b.layer);
 
       elements.forEach(e => {
-        // Mouse interaction: repulsión al acercar
-        const dx = e.x - mouse.x, dy = e.y - mouse.y;
-        const d  = Math.sqrt(dx*dx + dy*dy);
-        const influence = 150 + e.layer * 50;
-        if (d < influence && d > 0) {
-          const force = (1 - d/influence) * 0.04 * (e.layer + 1);
-          e.vx += (dx/d) * force;
-          e.vy += (dy/d) * force;
-        }
-
-        // Limitar velocidad por capa
+        // Deriva ambiente (lenta y calma)
         const maxSpd = [0.04, 0.07, 0.11][e.layer];
         const spd = Math.sqrt(e.vx*e.vx + e.vy*e.vy);
         if (spd > maxSpd) { e.vx = (e.vx/spd)*maxSpd; e.vy = (e.vy/spd)*maxSpd; }
-
         e.x += e.vx; e.y += e.vy;
         e.x = wrap(e.x, canvas.width,  200);
         e.y = wrap(e.y, canvas.height, 200);
+
+        // Interacción con el mouse: las formas se apartan del cursor y vuelven suave.
+        // Es un desplazamiento propio (no toca la deriva), por eso se nota aunque el resto sea lento.
+        const dx = e.x - mouse.x, dy = e.y - mouse.y;
+        const d  = Math.sqrt(dx*dx + dy*dy) || 1;
+        const influence = 220 + e.layer * 60;
+        let tx = 0, ty = 0;
+        if (d < influence) {
+          const f = 1 - d / influence;                  // 0 en el borde, 1 sobre el cursor
+          const strength = f * f * (45 + e.layer * 30);  // las capas cercanas se apartan más
+          tx = (dx / d) * strength;
+          ty = (dy / d) * strength;
+        }
+        e.pushX += (tx - e.pushX) * 0.12;   // ease suave hacia/desde el cursor
+        e.pushY += (ty - e.pushY) * 0.12;
 
         if (e.type === 'arrow') e.rot += e.vrot;
         if (e.type === 'gantt') {
@@ -395,7 +400,11 @@
           if (e.progress > 0.98 || e.progress < 0.05) e.dir *= -1;
         }
 
+        // Dibujar aplicando el desplazamiento del mouse (sin alterar la posición base)
+        const bx = e.x, by = e.y;
+        e.x += e.pushX; e.y += e.pushY;
         drawFn[e.type](e);
+        e.x = bx; e.y = by;
       });
 
       ctx.globalAlpha = 1;
