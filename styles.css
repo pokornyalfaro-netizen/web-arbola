@@ -617,81 +617,48 @@ strong { font-weight: 600; }
 }
 .booking-fallback:hover { color: var(--naranja); }
 
-/* ─── MODAL DETALLE DE SERVICIOS ─── */
+/* ─── DETALLE DE SERVICIOS (sección que se amplía) ─── */
 .service-card { cursor: pointer; }
-.info-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
-.info-modal.open { display: flex; }
-.info-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(2px);
-}
-.info-dialog {
-  position: relative;
-  width: 100%;
-  max-width: 560px;
-  max-height: 86vh;
-  overflow-y: auto;
-  background: var(--blanco);
+.service-detail {
+  margin-top: 2.5rem;
+  padding: 2.5rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.12);
   border-radius: 14px;
-  padding: 2.6rem 2.5rem 2.5rem;
-  box-shadow: 0 24px 60px rgba(0,0,0,.35);
-  animation: bookingIn .25s ease;
+  animation: detailIn .3s ease;
 }
-.info-close {
-  position: absolute;
-  top: 12px; right: 14px;
-  width: 36px; height: 36px;
-  border: none;
-  background: rgba(0,0,0,.05);
-  color: var(--gris);
-  border-radius: 50%;
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background .2s;
+.service-detail[hidden] { display: none; }
+@keyframes detailIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
 }
-.info-close:hover { background: rgba(0,0,0,.12); }
-.info-dialog .service-num {
-  display: block;
-  font-size: .8rem;
-  letter-spacing: 2px;
-  margin-bottom: .5rem;
-}
-.info-dialog h3 {
+.service-detail .service-num { display: block; margin-bottom: .5rem; }
+.service-detail h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--azul);
+  color: var(--blanco);
   line-height: 1.2;
   margin-bottom: .8rem;
 }
-.info-dialog > p {
-  color: var(--gris);
+.service-detail > p {
+  color: rgba(255,255,255,.7);
   margin-bottom: 1.4rem;
+  max-width: 680px;
 }
-.info-dialog ul {
+.service-detail ul {
   list-style: none;
-  margin: 0 0 1.9rem;
+  margin: 0 0 1.8rem;
   padding: 0;
 }
-.info-dialog li {
+.service-detail li {
   position: relative;
   padding-left: 1.7rem;
   margin-bottom: .65rem;
-  color: var(--gris);
+  color: rgba(255,255,255,.78);
   font-size: .95rem;
   line-height: 1.5;
 }
-.info-dialog li::before {
+.service-detail li::before {
   content: "✓";
   position: absolute;
   left: 0;

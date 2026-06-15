@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="styles.css?v=13" />
 </head>
 <body>
 
@@ -129,6 +129,14 @@
           <span class="card-link">Saber más →</span>
         </div>
       </div>
+
+      <div class="service-detail" id="serviceDetail" hidden>
+        <span class="service-num" id="serviceDetailNum"></span>
+        <h3 id="serviceDetailTitle"></h3>
+        <p id="serviceDetailDesc"></p>
+        <ul id="serviceDetailList"></ul>
+        <a href="#contacto" class="btn btn-fill" data-booking>Agendá una reunión</a>
+      </div>
     </div>
   </section>
 
@@ -246,19 +254,6 @@
       <button class="booking-close" type="button" data-booking-close aria-label="Cerrar">&times;</button>
       <iframe id="bookingFrame" title="Agendá una reunión con ÁRBOLA" loading="lazy"></iframe>
       <a class="booking-fallback" href="https://calendar.app.google/tUJkov3j9fUSfVse8" target="_blank" rel="noopener">¿No carga el calendario? Abrilo en una pestaña nueva ↗</a>
-    </div>
-  </div>
-
-  <!-- MODAL DETALLE DE SERVICIOS -->
-  <div class="info-modal" id="serviceModal" aria-hidden="true">
-    <div class="info-backdrop" data-info-close></div>
-    <div class="info-dialog" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
-      <button class="info-close" type="button" data-info-close aria-label="Cerrar">&times;</button>
-      <span class="service-num" id="serviceModalNum"></span>
-      <h3 id="serviceModalTitle"></h3>
-      <p id="serviceModalDesc"></p>
-      <ul id="serviceModalList"></ul>
-      <a href="#contacto" class="btn btn-fill" data-info-close>Agendá una reunión</a>
     </div>
   </div>
 
@@ -607,10 +602,10 @@
   </script>
 
   <script>
-    // ── MODAL DETALLE DE SERVICIOS ──
+    // ── DETALLE DE SERVICIOS (se amplía en una sección al tocar la tarjeta) ──
     (function() {
-      const modal = document.getElementById('serviceModal');
-      if (!modal) return;
+      const detail = document.getElementById('serviceDetail');
+      if (!detail) return;
       const data = {
         '01': {
           title: 'Gestión y procesos',
@@ -646,34 +641,24 @@
           ]
         }
       };
-      const numEl = document.getElementById('serviceModalNum');
-      const titleEl = document.getElementById('serviceModalTitle');
-      const descEl = document.getElementById('serviceModalDesc');
-      const listEl = document.getElementById('serviceModalList');
-      function openService(id) {
+      const numEl = document.getElementById('serviceDetailNum');
+      const titleEl = document.getElementById('serviceDetailTitle');
+      const descEl = document.getElementById('serviceDetailDesc');
+      const listEl = document.getElementById('serviceDetailList');
+      function showService(id) {
         const s = data[id]; if (!s) return;
         numEl.textContent = id;
         titleEl.textContent = s.title;
         descEl.textContent = s.desc;
         listEl.innerHTML = s.items.map(i => '<li>' + i + '</li>').join('');
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-      }
-      function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
+        detail.hidden = false;
+        detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       document.querySelectorAll('[data-service]').forEach(card => {
-        card.addEventListener('click', () => openService(card.getAttribute('data-service')));
+        card.addEventListener('click', () => showService(card.getAttribute('data-service')));
         card.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openService(card.getAttribute('data-service')); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showService(card.getAttribute('data-service')); }
         });
-      });
-      modal.querySelectorAll('[data-info-close]').forEach(b => b.addEventListener('click', closeModal));
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
       });
     })();
   </script>
