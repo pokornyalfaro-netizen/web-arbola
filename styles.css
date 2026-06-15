@@ -535,11 +535,45 @@ strong { font-weight: 600; }
 }
 
 @media (max-width: 600px) {
-  .nav-links  { display: none; }
+  .nav-links   { display: none; }
   .menu-toggle { display: flex; }
-  .hero-inner h1 { font-size: 2.2rem; }
-  .stats-row  { grid-template-columns: 1fr; }
-  .stat       { border-right: none !important; border-top: 1px solid var(--borde); padding-left: 0 !important; }
+  .hero-inner h1 { font-size: 2rem; }
+  .hero        { padding: 0 1.5rem 4rem; }
+  .hero-tag    { font-size: .65rem; }
+  .hero-sub    { font-size: .95rem; }
+  .stats-row   { grid-template-columns: 1fr; }
+  .stat        { border-right: none !important; border-top: 1px solid var(--borde); padding-left: 0 !important; }
   .stat:first-child { border-top: none; }
-  .sec-grid-2 { gap: 2rem; }
+  .sec-grid-2  { gap: 2rem; }
+  .values-bar  { display: none; }
+  .contact-btns { flex-direction: column; align-items: center; }
+  .btn         { width: 100%; text-align: center; }
 }
+
+/* ─── SCROLL REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delays escalonados */
+.stat:nth-child(1) { transition-delay: .0s; }
+.stat:nth-child(2) { transition-delay: .1s; }
+.stat:nth-child(3) { transition-delay: .2s; }
+.stat:nth-child(4) { transition-delay: .3s; }
+
+.service-card:nth-child(1) { transition-delay: .0s; }
+.service-card:nth-child(2) { transition-delay: .15s; }
+.service-card:nth-child(3) { transition-delay: .3s; }
+
+.diag-step:nth-child(1) { transition-delay: .0s; }
+.diag-step:nth-child(2) { transition-delay: .15s; }
+.diag-step:nth-child(3) { transition-delay: .3s; }
+
+/* Cursor personalizado en hero */
+.hero { cursor: crosshair; }

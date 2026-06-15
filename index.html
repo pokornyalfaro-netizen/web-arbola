@@ -209,6 +209,10 @@
     resize();
     window.addEventListener('resize', resize);
 
+    // Mouse tracking
+    const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
     function rnd(min, max) { return min + Math.random() * (max - min); }
     function rndC() { return COLORS[Math.floor(Math.random() * COLORS.length)]; }
     function wrap(v, size, margin) {
@@ -306,6 +310,23 @@
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Líneas desde el mouse a nodos cercanos
+      nodes.forEach(n => {
+        const dx = mouse.x - n.x, dy = mouse.y - n.y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 180) {
+          ctx.globalAlpha = (1 - d/180) * 0.4;
+          ctx.strokeStyle = C.naranja; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          // Atracción suave al mouse
+          n.vx += dx * 0.0008;
+          n.vy += dy * 0.0008;
+        }
+        // Limitar velocidad
+        const speed = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
+        if (speed > 2.5) { n.vx = (n.vx/speed)*2.5; n.vy = (n.vy/speed)*2.5; }
+      });
+
       // Líneas entre nodos cercanos
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i+1; j < nodes.length; j++) {
@@ -356,6 +377,23 @@
       requestAnimationFrame(animate);
     }
     animate();
+  </script>
+
+  <script>
+    // ── SCROLL ANIMATIONS ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.sec-label, h2, .sec-body, .stat, .service-card, .diag-step, .stat-item, .values-bar span').forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
   </script>
 
   <script>
