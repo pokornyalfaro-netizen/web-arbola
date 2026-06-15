@@ -202,175 +202,189 @@
     // ── CANVAS HERO — GESTIÓN DE PROYECTOS ──
     const canvas = document.getElementById('heroCanvas');
     const ctx    = canvas.getContext('2d');
-    const C = { naranja:'#dc7945', teal:'#9fd0d8', jade:'#8fc3b1', blanco:'rgba(255,255,255,0.7)' };
+    const C = { naranja:'#dc7945', teal:'#9fd0d8', jade:'#8fc3b1', blanco:'rgba(255,255,255,0.85)' };
     const COLORS = [C.naranja, C.teal, C.jade, C.blanco];
 
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resize();
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); }
     window.addEventListener('resize', resize);
 
-    // Mouse tracking
-    const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+    const mouse = { x: -999, y: -999 };
     window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 
-    function rnd(min, max) { return min + Math.random() * (max - min); }
+    function rnd(a, b) { return a + Math.random() * (b - a); }
     function rndC() { return COLORS[Math.floor(Math.random() * COLORS.length)]; }
-    function wrap(v, size, margin) {
-      if (v < -margin) return size + margin;
-      if (v > size + margin) return -margin;
-      return v;
+    function wrap(v, max, m) { return v < -m ? max + m : v > max + m ? -m : v; }
+
+    // CAPAS DE PROFUNDIDAD: layer 0 = lejos (pequeño, lento, transparente) → layer 2 = cerca (grande, rápido, opaco)
+    function makeElement(type, layer) {
+      const speed  = [0.3, 0.9, 1.8][layer];
+      const scale  = [0.4, 0.7, 1.0][layer];
+      const alpha  = [0.12, 0.22, 0.38][layer];
+      return {
+        type, layer, scale, alpha,
+        x: rnd(0, canvas.width), y: rnd(0, canvas.height),
+        vx: rnd(-speed, speed), vy: rnd(-speed, speed),
+        color: rndC(),
+        // propiedades por tipo
+        w: rnd(60, 140) * scale, h: rnd(7, 13) * scale, fill: rnd(0.2, 0.95),     // gantt
+        r: rnd(18, 40) * scale, progress: rnd(0.2, 0.9),                            // donut / arc
+        pSlices: [rnd(10,35), rnd(10,35), rnd(10,35), rnd(10,35)],                  // pie
+        len: rnd(30, 65) * scale, rot: rnd(0, Math.PI*2), vrot: rnd(-0.03,0.03),    // arrow
+        size: rnd(14, 30) * scale,                                                   // check / kpi
+        tlW: rnd(80,180)*scale, tlRows: Math.floor(rnd(2,5)),                        // timeline
+        speed: rnd(0.004, 0.015), dir: Math.random() > 0.5 ? 1 : -1,
+      };
     }
 
-    // 1. BARRAS GANTT
-    const gantt = Array.from({ length: 12 }, () => ({
-      x: rnd(0, canvas.width), y: rnd(0, canvas.height),
-      w: rnd(60, 180), h: rnd(6, 14),
-      fill: rnd(0.3, 0.9), color: rndC(), alpha: rnd(0.15, 0.35),
-      vx: rnd(-1.5, 1.5), vy: rnd(-1, 1),
-    }));
+    const TYPES = ['gantt','donut','pie','arrow','check','kpi','timeline'];
+    let elements = [];
 
-    // 2. ARCOS DE PROGRESO
-    const arcs = Array.from({ length: 10 }, () => ({
-      x: rnd(0, canvas.width), y: rnd(0, canvas.height),
-      r: rnd(18, 45), progress: rnd(0.2, 0.9),
-      color: rndC(), alpha: rnd(0.2, 0.4),
-      vx: rnd(-1.5, 1.5), vy: rnd(-1.5, 1.5),
-      speed: rnd(0.005, 0.02), dir: Math.random() > 0.5 ? 1 : -1,
-    }));
+    function init() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      elements = [];
+      // 3 capas × varios tipos
+      for (let layer = 0; layer < 3; layer++) {
+        TYPES.forEach(type => {
+          const count = type === 'gantt' ? 4 : type === 'timeline' ? 2 : 3;
+          for (let i = 0; i < count; i++) elements.push(makeElement(type, layer));
+        });
+      }
+    }
+    init();
 
-    // 3. NODOS CONECTADOS (diagrama de flujo)
-    const nodes = Array.from({ length: 14 }, () => ({
-      x: rnd(0, canvas.width), y: rnd(0, canvas.height),
-      r: rnd(4, 9), color: rndC(), alpha: rnd(0.3, 0.6),
-      vx: rnd(-1.2, 1.2), vy: rnd(-1.2, 1.2),
-    }));
-
-    // 4. FLECHAS DE PROCESO
-    const arrows = Array.from({ length: 8 }, () => ({
-      x: rnd(0, canvas.width), y: rnd(0, canvas.height),
-      len: rnd(30, 70), rot: rnd(0, Math.PI * 2),
-      color: rndC(), alpha: rnd(0.15, 0.3),
-      vx: rnd(-1.5, 1.5), vy: rnd(-1, 1), vrot: rnd(-0.02, 0.02),
-    }));
-
-    // 5. CHECKS (✓)
-    const checks = Array.from({ length: 7 }, () => ({
-      x: rnd(0, canvas.width), y: rnd(0, canvas.height),
-      size: rnd(12, 28), color: C.jade, alpha: rnd(0.2, 0.4),
-      vx: rnd(-1, 1), vy: rnd(-1, 1),
-    }));
-
-    function drawGantt(g) {
-      ctx.save();
-      ctx.globalAlpha = g.alpha;
-      // track
-      ctx.fillStyle = 'rgba(255,255,255,0.08)';
-      ctx.beginPath(); ctx.roundRect(g.x, g.y, g.w, g.h, 3); ctx.fill();
-      // fill
-      ctx.fillStyle = g.color;
-      ctx.beginPath(); ctx.roundRect(g.x, g.y, g.w * g.fill, g.h, 3); ctx.fill();
+    // ── DRAW FUNCTIONS ──
+    function drawGantt(e) {
+      ctx.save(); ctx.globalAlpha = e.alpha;
+      ctx.fillStyle = 'rgba(255,255,255,0.07)';
+      ctx.beginPath(); ctx.roundRect(e.x, e.y, e.w, e.h, 3); ctx.fill();
+      ctx.fillStyle = e.color;
+      ctx.beginPath(); ctx.roundRect(e.x, e.y, e.w * e.fill, e.h, 3); ctx.fill();
       ctx.restore();
     }
 
-    function drawArc(a) {
-      ctx.save();
-      ctx.globalAlpha = a.alpha;
-      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-      ctx.lineWidth = 4;
-      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.stroke();
-      ctx.strokeStyle = a.color;
-      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, -Math.PI/2, -Math.PI/2 + Math.PI*2*a.progress); ctx.stroke();
+    function drawDonut(e) {
+      ctx.save(); ctx.globalAlpha = e.alpha;
+      ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = e.r * 0.35;
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI*2); ctx.stroke();
+      ctx.strokeStyle = e.color; ctx.lineWidth = e.r * 0.3;
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r, -Math.PI/2, -Math.PI/2 + Math.PI*2*e.progress); ctx.stroke();
       ctx.restore();
     }
 
-    function drawArrow(a) {
-      ctx.save();
-      ctx.translate(a.x, a.y); ctx.rotate(a.rot);
-      ctx.globalAlpha = a.alpha;
-      ctx.strokeStyle = a.color; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(a.len, 0); ctx.stroke();
-      ctx.fillStyle = a.color;
-      ctx.beginPath(); ctx.moveTo(a.len, 0); ctx.lineTo(a.len-10, -5); ctx.lineTo(a.len-10, 5); ctx.closePath(); ctx.fill();
+    function drawPie(e) {
+      const total = e.pSlices.reduce((a,b) => a+b, 0);
+      const pieC  = [C.naranja, C.teal, C.jade, 'rgba(255,255,255,0.4)'];
+      let angle = -Math.PI/2;
+      ctx.save(); ctx.globalAlpha = e.alpha;
+      e.pSlices.forEach((s, i) => {
+        const sweep = (s/total) * Math.PI * 2;
+        ctx.fillStyle = pieC[i];
+        ctx.beginPath(); ctx.moveTo(e.x, e.y);
+        ctx.arc(e.x, e.y, e.r, angle, angle + sweep);
+        ctx.closePath(); ctx.fill();
+        angle += sweep;
+      });
+      // hole
+      ctx.fillStyle = '#1a3340';
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r * 0.5, 0, Math.PI*2); ctx.fill();
       ctx.restore();
     }
 
-    function drawCheck(c) {
-      ctx.save();
-      ctx.translate(c.x, c.y);
-      ctx.globalAlpha = c.alpha;
-      ctx.strokeStyle = c.color; ctx.lineWidth = 2.5; ctx.lineCap = 'round';
+    function drawArrow(e) {
+      ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(e.rot);
+      ctx.globalAlpha = e.alpha; ctx.strokeStyle = e.color; ctx.lineWidth = 1.5 * e.scale;
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(e.len, 0); ctx.stroke();
+      ctx.fillStyle = e.color;
+      const h = 6 * e.scale;
+      ctx.beginPath(); ctx.moveTo(e.len, 0); ctx.lineTo(e.len - h*1.5, -h*0.7); ctx.lineTo(e.len - h*1.5, h*0.7); ctx.closePath(); ctx.fill();
+      ctx.restore();
+    }
+
+    function drawCheck(e) {
+      ctx.save(); ctx.translate(e.x, e.y); ctx.globalAlpha = e.alpha;
+      ctx.strokeStyle = e.color; ctx.lineWidth = 2 * e.scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      // circle
+      ctx.beginPath(); ctx.arc(0, 0, e.size, 0, Math.PI*2); ctx.stroke();
+      // tick
       ctx.beginPath();
-      ctx.moveTo(-c.size*0.4, 0);
-      ctx.lineTo(-c.size*0.1, c.size*0.35);
-      ctx.lineTo(c.size*0.45, -c.size*0.4);
+      ctx.moveTo(-e.size*0.4, 0);
+      ctx.lineTo(-e.size*0.1, e.size*0.38);
+      ctx.lineTo(e.size*0.45, -e.size*0.38);
       ctx.stroke();
       ctx.restore();
     }
 
+    function drawKPI(e) {
+      const s = e.size;
+      ctx.save(); ctx.translate(e.x, e.y); ctx.globalAlpha = e.alpha;
+      // caja
+      ctx.strokeStyle = e.color; ctx.lineWidth = 1.2 * e.scale;
+      ctx.beginPath(); ctx.roundRect(-s, -s*0.6, s*2, s*1.2, 4); ctx.stroke();
+      // mini barras KPI
+      const bars = 4; const bw = (s*1.6/bars) * 0.65; const gap = (s*1.6/bars) * 0.35;
+      const heights = [0.3, 0.7, 0.5, 0.9];
+      for (let i = 0; i < bars; i++) {
+        const bh = s * 0.7 * heights[i];
+        const bx = -s*0.8 + i*(bw+gap);
+        const by = s*0.35 - bh;
+        ctx.fillStyle = i === 3 ? C.naranja : e.color;
+        ctx.globalAlpha = e.alpha * (i === 3 ? 1 : 0.6);
+        ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 2); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawTimeline(e) {
+      ctx.save(); ctx.translate(e.x, e.y); ctx.globalAlpha = e.alpha;
+      const rowH = 10 * e.scale; const gap = 6 * e.scale;
+      for (let i = 0; i < e.tlRows; i++) {
+        const y = i * (rowH + gap);
+        const offset = rnd(0, e.tlW * 0.3);
+        const w = rnd(e.tlW * 0.3, e.tlW * 0.8);
+        ctx.fillStyle = 'rgba(255,255,255,0.07)';
+        ctx.beginPath(); ctx.roundRect(0, y, e.tlW, rowH, 3); ctx.fill();
+        ctx.fillStyle = i % 2 === 0 ? e.color : C.jade;
+        ctx.beginPath(); ctx.roundRect(offset, y, w, rowH, 3); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    const drawFn = { gantt: drawGantt, donut: drawDonut, pie: drawPie, arrow: drawArrow, check: drawCheck, kpi: drawKPI, timeline: drawTimeline };
+
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Líneas desde el mouse a nodos cercanos
-      nodes.forEach(n => {
-        const dx = mouse.x - n.x, dy = mouse.y - n.y;
-        const d = Math.sqrt(dx*dx + dy*dy);
-        if (d < 180) {
-          ctx.globalAlpha = (1 - d/180) * 0.4;
-          ctx.strokeStyle = C.naranja; ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-          // Atracción suave al mouse
-          n.vx += dx * 0.0008;
-          n.vy += dy * 0.0008;
+      // Ordenar por capa para efecto profundidad
+      elements.sort((a, b) => a.layer - b.layer);
+
+      elements.forEach(e => {
+        // Mouse interaction: repulsión al acercar
+        const dx = e.x - mouse.x, dy = e.y - mouse.y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        const influence = 150 + e.layer * 50;
+        if (d < influence && d > 0) {
+          const force = (1 - d/influence) * 0.04 * (e.layer + 1);
+          e.vx += (dx/d) * force;
+          e.vy += (dy/d) * force;
         }
-        // Limitar velocidad
-        const speed = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
-        if (speed > 2.5) { n.vx = (n.vx/speed)*2.5; n.vy = (n.vy/speed)*2.5; }
-      });
 
-      // Líneas entre nodos cercanos
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i+1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
-          const d = Math.sqrt(dx*dx + dy*dy);
-          if (d < 160) {
-            ctx.globalAlpha = (1 - d/160) * 0.18;
-            ctx.strokeStyle = C.teal; ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke();
-          }
+        // Limitar velocidad por capa
+        const maxSpd = [0.6, 1.4, 2.5][e.layer];
+        const spd = Math.sqrt(e.vx*e.vx + e.vy*e.vy);
+        if (spd > maxSpd) { e.vx = (e.vx/spd)*maxSpd; e.vy = (e.vy/spd)*maxSpd; }
+
+        e.x += e.vx; e.y += e.vy;
+        e.x = wrap(e.x, canvas.width,  200);
+        e.y = wrap(e.y, canvas.height, 200);
+
+        if (e.type === 'arrow') e.rot += e.vrot;
+        if (e.type === 'donut') {
+          e.progress += e.speed * e.dir;
+          if (e.progress > 0.98 || e.progress < 0.05) e.dir *= -1;
         }
-      }
 
-      gantt.forEach(g => {
-        g.x += g.vx; g.y += g.vy;
-        g.x = wrap(g.x, canvas.width, 200); g.y = wrap(g.y, canvas.height, 30);
-        drawGantt(g);
-      });
-
-      arcs.forEach(a => {
-        a.x += a.vx; a.y += a.vy;
-        a.progress += a.speed * a.dir;
-        if (a.progress > 1 || a.progress < 0.1) a.dir *= -1;
-        a.x = wrap(a.x, canvas.width, 60); a.y = wrap(a.y, canvas.height, 60);
-        drawArc(a);
-      });
-
-      nodes.forEach(n => {
-        n.x += n.vx; n.y += n.vy;
-        n.x = wrap(n.x, canvas.width, 20); n.y = wrap(n.y, canvas.height, 20);
-        ctx.globalAlpha = n.alpha; ctx.fillStyle = n.color;
-        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2); ctx.fill();
-      });
-
-      arrows.forEach(a => {
-        a.x += a.vx; a.y += a.vy; a.rot += a.vrot;
-        a.x = wrap(a.x, canvas.width, 100); a.y = wrap(a.y, canvas.height, 100);
-        drawArrow(a);
-      });
-
-      checks.forEach(c => {
-        c.x += c.vx; c.y += c.vy;
-        c.x = wrap(c.x, canvas.width, 40); c.y = wrap(c.y, canvas.height, 40);
-        drawCheck(c);
+        drawFn[e.type](e);
       });
 
       ctx.globalAlpha = 1;
