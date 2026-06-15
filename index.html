@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -14,14 +14,14 @@
   <header class="navbar" id="navbar">
     <a href="#inicio" class="logo">
       <span class="logo-name">ÁRBOLA</span>
-      <span class="logo-desc">CONSULTORÍA DE GESTIÓN</span>
+      <span class="logo-rule"></span>
+      <span class="logo-desc">Consultoría de Gestión</span>
     </a>
     <nav class="nav-links">
-      <a href="#inicio">Inicio</a>
-      <a href="#quienes-somos">¿Quiénes somos?</a>
-      <a href="#que-hacemos">¿Qué hacemos?</a>
+      <a href="#quienes-somos">Quiénes somos</a>
+      <a href="#que-hacemos">Qué hacemos</a>
       <a href="#diagnostico">Diagnóstico</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#contacto" class="nav-cta">Contacto</a>
     </nav>
     <button class="menu-toggle" id="menuToggle" aria-label="Menú">
       <span></span><span></span><span></span>
@@ -30,150 +30,187 @@
 
   <div class="mobile-overlay" id="mobileOverlay"></div>
   <nav class="mobile-menu" id="mobileMenu">
-    <a href="#inicio">Inicio</a>
-    <a href="#quienes-somos">¿Quiénes somos?</a>
-    <a href="#que-hacemos">¿Qué hacemos?</a>
+    <a href="#quienes-somos">Quiénes somos</a>
+    <a href="#que-hacemos">Qué hacemos</a>
     <a href="#diagnostico">Diagnóstico</a>
     <a href="#contacto">Contacto</a>
   </nav>
 
   <!-- HERO -->
   <section class="hero" id="inicio">
-    <div class="hero-bg"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Consultoría de Gestión para PyMEs de la Construcción</p>
-      <h1>Transformamos tu gestión en una herramienta real de crecimiento</h1>
-      <p class="hero-sub">Acompañamos a empresas constructoras e industriales en Argentina y toda América con soluciones adaptadas a cada realidad.</p>
-      <div class="hero-buttons">
-        <a href="#contacto" class="btn btn-naranja">Agenda una reunión</a>
-        <a href="#diagnostico" class="btn btn-outline">Conocé el diagnóstico</a>
+    <div class="hero-inner">
+      <p class="hero-tag">Consultoría de Gestión · Argentina y América Latina</p>
+      <h1>Juntos, profesionalizamos tu empresa</h1>
+      <p class="hero-sub">Transformamos la gestión de PyMEs de la construcción en una herramienta real de crecimiento, con mayor previsibilidad y solidez.</p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn btn-fill">Agenda una reunión</a>
+        <a href="#diagnostico" class="btn btn-ghost">Conocé el diagnóstico →</a>
       </div>
     </div>
-    <div class="hero-scroll">↓</div>
+    <div class="hero-deco"></div>
   </section>
 
+  <!-- FRANJA VALORES -->
+  <div class="values-bar">
+    <span>Modernos</span>
+    <span class="dot">·</span>
+    <span>Disruptivos</span>
+    <span class="dot">·</span>
+    <span>Estratégicos</span>
+    <span class="dot">·</span>
+    <span>Cercanos</span>
+    <span class="dot">·</span>
+    <span>Transparentes</span>
+  </div>
+
   <!-- QUIÉNES SOMOS -->
-  <section class="section bg-crema" id="quienes-somos">
-    <div class="container two-col">
-      <div class="col-text">
-        <span class="eyebrow">Quiénes somos</span>
-        <h2>Ingenieros con experiencia real en obra y gestión</h2>
-        <p>En ÁRBOLA acompañamos a empresas del sector para mejorar su organización, planificación y gestión con herramientas concretas y aplicables.</p>
-        <p>Buscamos transformar el proceso de gestión en una herramienta real para aquellas empresas que buscan crecer con mayor <strong>previsibilidad y solidez</strong>.</p>
-        <p>Trabajamos con empresas constructoras e industriales en Argentina y toda América, con soluciones adaptadas a cada realidad.</p>
+  <section class="sec" id="quienes-somos">
+    <div class="wrap">
+      <div class="sec-label">Quiénes somos</div>
+      <div class="sec-grid-2">
+        <div>
+          <h2>Ingenieros con experiencia real en obra y gestión</h2>
+        </div>
+        <div class="sec-body">
+          <p>En ÁRBOLA acompañamos a empresas del sector para mejorar su organización, planificación y gestión con herramientas concretas y aplicables.</p>
+          <p>Buscamos transformar el proceso de gestión en una herramienta real para aquellas empresas que buscan crecer con mayor <strong>previsibilidad y solidez</strong>.</p>
+          <p>Trabajamos con empresas constructoras e industriales en <strong>Argentina y toda América</strong>, con soluciones adaptadas a cada realidad.</p>
+          <a href="#contacto" class="link-arrow">Hablemos →</a>
+        </div>
       </div>
-      <div class="col-stats">
-        <div class="stat-item">
-          <span class="stat-big">PyMEs</span>
-          <span class="stat-text">Especializados en construcción</span>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-n">PyMEs</span>
+          <span class="stat-l">Especialización en construcción</span>
         </div>
-        <div class="stat-item">
-          <span class="stat-big">ARG +</span>
-          <span class="stat-text">América Latina</span>
+        <div class="stat">
+          <span class="stat-n">ARG +</span>
+          <span class="stat-l">Toda América Latina</span>
         </div>
-        <div class="stat-item">
-          <span class="stat-big">100%</span>
-          <span class="stat-text">Soluciones a medida</span>
+        <div class="stat">
+          <span class="stat-n">100%</span>
+          <span class="stat-l">Soluciones a medida</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n">Free</span>
+          <span class="stat-l">Primera reunión sin costo</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- QUÉ HACEMOS -->
-  <section class="section bg-azul" id="que-hacemos">
-    <div class="container">
-      <div class="section-header">
-        <span class="eyebrow eyebrow-teal">Qué hacemos</span>
-        <h2>Soluciones para cada etapa de tu empresa</h2>
-      </div>
-      <div class="cards">
-        <div class="card">
-          <div class="card-num">01</div>
+  <section class="sec sec-dark" id="que-hacemos">
+    <div class="wrap">
+      <div class="sec-label sec-label-light">Qué hacemos</div>
+      <h2>Soluciones para cada etapa de tu empresa</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <span class="service-num">01</span>
           <h3>Gestión y procesos</h3>
           <p>Organizamos y optimizamos los procesos internos de tu empresa para que opere con mayor eficiencia y orden.</p>
+          <a href="#contacto" class="card-link">Saber más →</a>
         </div>
-        <div class="card">
-          <div class="card-num">02</div>
+        <div class="service-card">
+          <span class="service-num">02</span>
           <h3>Dirección de proyectos</h3>
           <p>Implementamos herramientas de planificación y control para que tus obras se ejecuten en tiempo y forma.</p>
+          <a href="#contacto" class="card-link">Saber más →</a>
         </div>
-        <div class="card">
-          <div class="card-num">03</div>
+        <div class="service-card">
+          <span class="service-num">03</span>
           <h3>Capacitación</h3>
-          <p>Charlas y formación individual para dueños y profesionales en liderazgo, planificación y gestión.</p>
+          <p>Charlas y formación individual para dueños y profesionales en liderazgo, planificación y gestión de proyectos.</p>
+          <a href="#contacto" class="card-link">Saber más →</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- DIAGNÓSTICO -->
-  <section class="section bg-white" id="diagnostico">
-    <div class="container center">
-      <span class="eyebrow">Diagnóstico</span>
-      <h2>¿Sabés en qué etapa está tu empresa?</h2>
-      <p class="lead">Realizamos un diagnóstico inicial <strong>gratuito</strong> para identificar las oportunidades de mejora y definir un plan de acción concreto.</p>
-      <div class="steps">
-        <div class="step">
-          <span class="step-num">01</span>
-          <p>Reunión inicial sin costo</p>
+  <section class="sec" id="diagnostico">
+    <div class="wrap">
+      <div class="sec-label">Diagnóstico</div>
+      <div class="sec-grid-2">
+        <div>
+          <h2>¿En qué etapa de profesionalización está tu empresa?</h2>
+          <a href="#contacto" class="btn btn-fill" style="margin-top:2rem;">Quiero mi diagnóstico gratuito</a>
         </div>
-        <div class="step-arrow">→</div>
-        <div class="step">
-          <span class="step-num">02</span>
-          <p>Análisis de tu empresa</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step">
-          <span class="step-num">03</span>
-          <p>Plan de acción concreto</p>
+        <div class="diag-steps">
+          <div class="diag-step">
+            <span class="diag-n">01</span>
+            <div>
+              <strong>Reunión inicial gratuita</strong>
+              <p>Nos conocemos y entendemos la situación actual de tu empresa.</p>
+            </div>
+          </div>
+          <div class="diag-step">
+            <span class="diag-n">02</span>
+            <div>
+              <strong>Análisis de tu organización</strong>
+              <p>Identificamos oportunidades de mejora en gestión, procesos y dirección.</p>
+            </div>
+          </div>
+          <div class="diag-step">
+            <span class="diag-n">03</span>
+            <div>
+              <strong>Plan de acción concreto</strong>
+              <p>Definimos juntos el camino para crecer con previsibilidad y solidez.</p>
+            </div>
+          </div>
         </div>
       </div>
-      <a href="#contacto" class="btn btn-naranja">Quiero mi diagnóstico gratuito</a>
     </div>
   </section>
 
   <!-- CONTACTO -->
-  <section class="section bg-gris" id="contacto">
-    <div class="container center">
-      <span class="eyebrow eyebrow-jade">Contacto</span>
+  <section class="sec sec-accent" id="contacto">
+    <div class="wrap center">
+      <div class="sec-label sec-label-light">Contacto</div>
       <h2>Hablemos de tu empresa</h2>
-      <p class="lead">Contanos la situación actual de tu empresa y los objetivos que querés alcanzar. <strong>¡Estamos para acompañarte!</strong></p>
-      <div class="contact-links">
-        <a href="mailto:hola@arbola.com.ar" class="btn btn-naranja">✉ hola@arbola.com.ar</a>
-        <a href="https://instagram.com/somosarbola" target="_blank" class="btn btn-outline-white">Instagram @somosarbola</a>
+      <p class="contact-lead">Contanos la situación actual de tu empresa y los objetivos que querés alcanzar.<br>¡Estamos para acompañarte!</p>
+      <div class="contact-btns">
+        <a href="mailto:hola@arbola.com.ar" class="btn btn-fill-white">✉ hola@arbola.com.ar</a>
+        <a href="https://instagram.com/somosarbola" target="_blank" class="btn btn-ghost-white">Instagram @somosarbola →</a>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <span class="footer-logo">ÁRBOLA</span>
-    <p>® 2025 ÁRBOLA. Todos los derechos reservados.</p>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">ÁRBOLA</span>
+        <span class="footer-tagline">Consultoría de Gestión</span>
+      </div>
+      <nav class="footer-nav">
+        <a href="#quienes-somos">Quiénes somos</a>
+        <a href="#que-hacemos">Qué hacemos</a>
+        <a href="#diagnostico">Diagnóstico</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>® 2025 ÁRBOLA. Todos los derechos reservados.</p>
+      <a href="https://instagram.com/somosarbola" target="_blank">@somosarbola</a>
+    </div>
   </footer>
 
   <script>
     const toggle = document.getElementById('menuToggle');
-    const menu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('mobileOverlay');
+    const menu   = document.getElementById('mobileMenu');
+    const overlay= document.getElementById('mobileOverlay');
 
-    function closeMenu() {
-      menu.classList.remove('open');
-      overlay.classList.remove('open');
-      toggle.classList.remove('active');
-    }
+    const close = () => { menu.classList.remove('open'); overlay.classList.remove('open'); toggle.classList.remove('active'); };
+    const open  = () => { menu.classList.add('open');    overlay.classList.add('open');    toggle.classList.add('active'); };
 
-    toggle.addEventListener('click', () => {
-      const open = menu.classList.contains('open');
-      open ? closeMenu() : (menu.classList.add('open'), overlay.classList.add('open'), toggle.classList.add('active'));
-    });
-
-    overlay.addEventListener('click', closeMenu);
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    toggle.addEventListener('click', () => menu.classList.contains('open') ? close() : open());
+    overlay.addEventListener('click', close);
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
 
     window.addEventListener('scroll', () => {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
     });
   </script>
-
 </body>
 </html>
