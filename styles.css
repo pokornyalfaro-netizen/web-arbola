@@ -134,10 +134,10 @@ a { text-decoration: none; color: inherit; }
   animation: linear infinite;
   pointer-events: none;
 }
-.s1 { width: 650px; height: 650px; background: var(--azul); opacity: .5; top: -150px; left: -150px; animation: floatA 20s linear infinite; }
-.s2 { width: 420px; height: 420px; background: var(--naranja); opacity: .22; bottom: -100px; right: 5%; animation: floatB 24s linear infinite; }
-.s3 { width: 380px; height: 380px; background: var(--teal); opacity: .18; top: 25%; right: -80px; animation: floatC 28s linear infinite; }
-.s4 { width: 260px; height: 260px; background: var(--naranja); opacity: .12; top: 10%; left: 42%; animation: floatD 22s linear infinite; }
+.s1 { width: 700px; height: 700px; background: var(--azul); opacity: .75; top: -150px; left: -150px; animation: floatA 8s ease-in-out infinite; }
+.s2 { width: 480px; height: 480px; background: var(--naranja); opacity: .55; bottom: -100px; right: 5%; animation: floatB 10s ease-in-out infinite; }
+.s3 { width: 420px; height: 420px; background: var(--teal); opacity: .45; top: 25%; right: -80px; animation: floatC 9s ease-in-out infinite; }
+.s4 { width: 300px; height: 300px; background: var(--naranja); opacity: .35; top: 10%; left: 42%; animation: floatD 7s ease-in-out infinite; }
 
 @keyframes floatA {
   0%   { transform: translate(0,0) scale(1); }
