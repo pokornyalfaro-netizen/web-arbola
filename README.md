@@ -1,6 +1,6 @@
 # WEB ÁRBOLA
 
-Sitio web del proyecto Árbola.
+Sitio web del proyecto Árbola. Una plataforma dedicada a la naturaleza y el medio ambiente.
 
 ## Tecnologías
 
