@@ -544,13 +544,17 @@ strong { font-weight: 600; }
 .contact-alt a:hover { color: var(--teal); }
 
 /* CTA de agendar en contacto */
-.contact-book { margin-top: .5rem; }
-.contact-or {
-  display: block;
-  margin: 1.6rem auto .2rem;
-  font-size: .82rem;
-  letter-spacing: .5px;
-  color: rgba(255,255,255,.5);
+.contact-book {
+  max-width: 640px;
+  margin: 2.5rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,.15);
+}
+.contact-book-label {
+  margin: 0 auto 1.1rem !important;
+  font-size: .9rem;
+  color: rgba(255,255,255,.65) !important;
+  max-width: 440px;
 }
 
 /* ─── MODAL AGENDAR REUNIÓN ─── */
