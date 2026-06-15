@@ -218,8 +218,7 @@
       </form>
 
       <div class="contact-alt">
-        <span>O escribinos directo:</span>
-        <a href="mailto:hola@arbola.com.ar">✉ hola@arbola.com.ar</a>
+        <span>O seguinos en:</span>
         <a href="https://instagram.com/somosarbola" target="_blank">Instagram @somosarbola →</a>
       </div>
     </div>
@@ -557,11 +556,11 @@
           } else {
             const data = await res.json().catch(() => ({}));
             cStatus.className = 'form-status err';
-            cStatus.textContent = data.message || 'No pudimos enviar el mensaje. Probá de nuevo o escribinos a hola@arbola.com.ar.';
+            cStatus.textContent = data.message || 'No pudimos enviar el mensaje. Por favor, probá de nuevo en unos minutos.';
           }
         } catch (err) {
           cStatus.className = 'form-status err';
-          cStatus.textContent = 'Hubo un problema de conexión. Probá de nuevo o escribinos a hola@arbola.com.ar.';
+          cStatus.textContent = 'Hubo un problema de conexión. Por favor, probá de nuevo.';
         } finally {
           cBtn.disabled = false;
           cBtn.textContent = label;
