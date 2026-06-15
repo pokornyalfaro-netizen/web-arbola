@@ -135,6 +135,21 @@ a { text-decoration: none; color: inherit; }
   z-index: 1;
 }
 
+/* Scrim de legibilidad: oscurece la zona del texto (abajo-izquierda),
+   deja los graficos visibles en el resto del hero */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to top right,
+    rgba(26, 51, 64, 0.97) 0%,
+    rgba(26, 51, 64, 0.92) 28%,
+    rgba(26, 51, 64, 0.55) 50%,
+    rgba(26, 51, 64, 0) 72%);
+}
+
 /* Formas animadas */
 .shape {
   position: absolute;
@@ -173,7 +188,7 @@ a { text-decoration: none; color: inherit; }
 
 .hero-inner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 780px;
   color: var(--blanco);
 }
