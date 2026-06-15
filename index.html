@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ÁRBOLA — Profesionalización de PyMEs de la construcción</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="#inicio" class="logo">ÁRBOLA</a>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#quienes-somos">¿Quiénes somos?</a>
+      <a href="#que-hacemos">¿Qué hacemos?</a>
+      <a href="#diagnostico">Diagnóstico</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#inicio" onclick="toggleMenu()">Inicio</a>
+    <a href="#quienes-somos" onclick="toggleMenu()">¿Quiénes somos?</a>
+    <a href="#que-hacemos" onclick="toggleMenu()">¿Qué hacemos?</a>
+    <a href="#diagnostico" onclick="toggleMenu()">Diagnóstico</a>
+    <a href="#contacto" onclick="toggleMenu()">Contacto</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h1>Profesionalizamos PyMEs de la construcción para fortalecer su gestión, procesos y dirección.</h1>
+      <p>Acompañamos a empresas constructoras e industriales en Argentina y en toda América, con soluciones de gestión adaptadas a cada realidad.</p>
+      <div class="hero-buttons">
+        <a href="https://calendar.google.com" target="_blank" class="btn btn-primary">Agenda una reunión</a>
+        <a href="#diagnostico" class="btn btn-secondary">Conocé el diagnóstico</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIÉNES SOMOS -->
+  <section class="section" id="quienes-somos">
+    <div class="container">
+      <h2>¿Quiénes somos?</h2>
+      <p class="section-lead">Somos un equipo de ingenieros con experiencia en obra y gestión.</p>
+      <p>En ÁRBOLA acompañamos a empresas del sector para mejorar su organización, planificación y gestión con herramientas concretas y aplicables.</p>
+      <p>Combinamos experiencia técnica y herramientas de dirección de proyectos para ayudar a PyMEs constructoras en crecimiento a profesionalizarse, expandirse y consolidar organizaciones sostenibles.</p>
+    </div>
+  </section>
+
+  <!-- QUÉ HACEMOS -->
+  <section class="section section-alt" id="que-hacemos">
+    <div class="container">
+      <h2>¿Qué hacemos?</h2>
+      <p class="section-lead">Soluciones de gestión adaptadas a cada empresa.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>Gestión y procesos</h3>
+          <p>Organizamos y optimizamos los procesos internos de tu empresa para que opere con mayor eficiencia.</p>
+        </div>
+        <div class="card">
+          <h3>Dirección de proyectos</h3>
+          <p>Implementamos herramientas de planificación y control para que tus obras se ejecuten en tiempo y forma.</p>
+        </div>
+        <div class="card">
+          <h3>Capacitación</h3>
+          <p>Brindamos charlas y formación individual para dueños y profesionales en liderazgo, planificación y gestión.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGNÓSTICO -->
+  <section class="section" id="diagnostico">
+    <div class="container center">
+      <h2>Diagnóstico</h2>
+      <p class="section-lead">¿Sabés en qué etapa de profesionalización está tu empresa?</p>
+      <p>Realizamos un diagnóstico inicial gratuito para identificar las oportunidades de mejora de tu organización y definir un plan de acción concreto.</p>
+      <a href="https://calendar.google.com" target="_blank" class="btn btn-primary">Agendar reunión gratuita</a>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section section-alt" id="contacto">
+    <div class="container center">
+      <h2>Contacto</h2>
+      <p class="section-lead">Hablemos sobre la situación actual de tu empresa y los objetivos que querés alcanzar.</p>
+      <p>¡Estamos para acompañarte!</p>
+      <div class="contact-links">
+        <a href="mailto:hola@arbola.com.ar" class="btn btn-primary">hola@arbola.com.ar</a>
+        <a href="https://instagram.com/somosarbola" target="_blank" class="btn btn-secondary">@somosarbola</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>® 2025 ÁRBOLA. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
