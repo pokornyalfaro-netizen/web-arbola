@@ -231,7 +231,7 @@
         pSlices: [rnd(10,35), rnd(10,35), rnd(10,35), rnd(10,35)],                  // pie
         len: rnd(30, 65) * scale, rot: rnd(0, Math.PI*2), vrot: rnd(-0.002,0.002),  // arrow
         size: rnd(14, 30) * scale,                                                   // check / kpi
-        tlW: rnd(80,180)*scale, tlRows: Math.floor(rnd(2,5)),                        // timeline
+        tlW: rnd(80,180)*scale, rows: (function(){ const n = Math.floor(rnd(2,5)); const a = []; for (let i=0;i<n;i++) a.push({ progress: rnd(0.15,0.85), dir: Math.random()>0.5?1:-1, jade: Math.random()>0.5 }); return a; })(),  // timeline
         speed: rnd(0.0003, 0.0008), dir: Math.random() > 0.5 ? 1 : -1,
       };
     }
@@ -338,15 +338,13 @@
     function drawTimeline(e) {
       ctx.save(); ctx.translate(e.x, e.y); ctx.globalAlpha = e.alpha;
       const rowH = 10 * e.scale; const gap = 6 * e.scale;
-      for (let i = 0; i < e.tlRows; i++) {
+      e.rows.forEach((row, i) => {
         const y = i * (rowH + gap);
-        const offset = rnd(0, e.tlW * 0.3);
-        const w = rnd(e.tlW * 0.3, e.tlW * 0.8);
         ctx.fillStyle = 'rgba(255,255,255,0.07)';
         ctx.beginPath(); ctx.roundRect(0, y, e.tlW, rowH, 3); ctx.fill();
-        ctx.fillStyle = i % 2 === 0 ? e.color : C.jade;
-        ctx.beginPath(); ctx.roundRect(offset, y, w, rowH, 3); ctx.fill();
-      }
+        ctx.fillStyle = row.jade ? C.jade : e.color;
+        ctx.beginPath(); ctx.roundRect(0, y, e.tlW * row.progress, rowH, 3); ctx.fill();
+      });
       ctx.restore();
     }
 
@@ -382,6 +380,12 @@
         if (e.type === 'gantt') {
           e.fill += 0.0003 * e.fillDir;
           if (e.fill > 0.97 || e.fill < 0.05) e.fillDir *= -1;
+        }
+        if (e.type === 'timeline') {
+          e.rows.forEach(row => {
+            row.progress += 0.0003 * row.dir;
+            if (row.progress > 0.95 || row.progress < 0.1) row.dir *= -1;
+          });
         }
         if (e.type === 'donut') {
           e.progress += e.speed * e.dir;
