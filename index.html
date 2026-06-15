@@ -202,7 +202,7 @@
     // ── CANVAS HERO — GESTIÓN DE PROYECTOS ──
     const canvas = document.getElementById('heroCanvas');
     const ctx    = canvas.getContext('2d');
-    const C = { naranja:'#dc7945', teal:'#9fd0d8', jade:'#8fc3b1', blanco:'rgba(255,255,255,0.85)' };
+    const C = { naranja:'#dc7945', teal:'#9fd0d8', jade:'#8fc3b1', crema:'#fffff1', blanco:'rgba(255,255,255,0.85)' };
     const COLORS = [C.naranja, C.teal, C.jade, C.blanco];
 
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); }
@@ -274,7 +274,7 @@
 
     function drawPie(e) {
       const total = e.pSlices.reduce((a,b) => a+b, 0);
-      const pieC  = [C.naranja, C.teal, C.jade, 'rgba(255,255,255,0.4)'];
+      const pieC  = [C.naranja, C.teal, C.jade, C.crema];
       let angle = -Math.PI/2;
       ctx.save(); ctx.globalAlpha = e.alpha;
       e.pSlices.forEach((s, i) => {
