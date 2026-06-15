@@ -134,32 +134,30 @@ a { text-decoration: none; color: inherit; }
   animation: linear infinite;
   pointer-events: none;
 }
-.s1 { width: 700px; height: 700px; background: var(--azul); opacity: .75; top: -150px; left: -150px; animation: floatA 0.8s ease-in-out infinite; }
-.s2 { width: 480px; height: 480px; background: var(--naranja); opacity: .55; bottom: -100px; right: 5%; animation: floatB 1s ease-in-out infinite; }
-.s3 { width: 420px; height: 420px; background: var(--teal); opacity: .45; top: 25%; right: -80px; animation: floatC 0.9s ease-in-out infinite; }
-.s4 { width: 300px; height: 300px; background: var(--naranja); opacity: .35; top: 10%; left: 42%; animation: floatD 0.7s ease-in-out infinite; }
+.s1 { width: 700px; height: 700px; background: var(--azul); opacity: .75; top: -150px; left: -150px; animation: floatA 3s ease-in-out infinite; }
+.s2 { width: 480px; height: 480px; background: var(--naranja); opacity: .55; bottom: -100px; right: 5%; animation: floatB 3.5s ease-in-out infinite; }
+.s3 { width: 420px; height: 420px; background: var(--teal); opacity: .45; top: 25%; right: -80px; animation: floatC 4s ease-in-out infinite; }
+.s4 { width: 300px; height: 300px; background: var(--naranja); opacity: .35; top: 10%; left: 42%; animation: floatD 2.5s ease-in-out infinite; }
 
 @keyframes floatA {
-  0%   { transform: translate(0,0) scale(1); }
-  33%  { transform: translate(90px,70px) scale(1.1); }
-  66%  { transform: translate(30px,130px) scale(0.95); }
-  100% { transform: translate(0,0) scale(1); }
+  0%   { transform: translate(0,0); }
+  50%  { transform: translate(300px, 250px); }
+  100% { transform: translate(0,0); }
 }
 @keyframes floatB {
-  0%   { transform: translate(0,0) scale(1); }
-  33%  { transform: translate(-70px,-90px) scale(1.15); }
-  66%  { transform: translate(-110px,-30px) scale(0.9); }
-  100% { transform: translate(0,0) scale(1); }
+  0%   { transform: translate(0,0); }
+  50%  { transform: translate(-350px, -200px); }
+  100% { transform: translate(0,0); }
 }
 @keyframes floatC {
-  0%   { transform: translate(0,0) scale(1); }
-  50%  { transform: translate(-60px,90px) scale(1.2); }
-  100% { transform: translate(0,0) scale(1); }
+  0%   { transform: translate(0,0); }
+  50%  { transform: translate(-280px, 200px); }
+  100% { transform: translate(0,0); }
 }
 @keyframes floatD {
-  0%   { transform: translate(0,0) scale(1); }
-  50%  { transform: translate(70px,-70px) scale(1.3); }
-  100% { transform: translate(0,0) scale(1); }
+  0%   { transform: translate(0,0); }
+  50%  { transform: translate(250px, -200px); }
+  100% { transform: translate(0,0); }
 }
 
 .hero-deco { display: none; }
