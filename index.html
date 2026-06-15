@@ -280,15 +280,15 @@
 
     function drawPie(e) {
       const total = e.pSlices.reduce((a,b) => a+b, 0);
-      const ringR = e.r * 0.72;            // radio del anillo (donut)
+      const ringR = e.r * 0.76;            // radio del anillo (donut)
       let angle = e.pieRot;
       ctx.save();
       ctx.globalAlpha = e.alpha;
-      ctx.lineWidth = e.r * 0.5;           // grosor del anillo
+      ctx.lineWidth = e.r * 0.34;          // grosor del anillo (mas fino y elegante)
       ctx.lineCap = 'butt';
       e.pSlices.forEach((s, i) => {
         const sweep = (s/total) * Math.PI * 2;
-        const g = Math.min(0.05, sweep * 0.25);   // separacion, sin invertir porciones chicas
+        const g = Math.min(0.07, sweep * 0.22);   // separacion, sin invertir porciones chicas
         ctx.strokeStyle = e.pieC[i % e.pieC.length];
         ctx.beginPath();
         ctx.arc(e.x, e.y, ringR, angle + g, angle + sweep - g);
