@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
 
@@ -174,9 +174,48 @@
       <div class="sec-label sec-label-light">Contacto</div>
       <h2>Hablemos de tu empresa</h2>
       <p class="contact-lead">Contanos la situación actual de tu empresa y los objetivos que querés alcanzar.<br>¡Estamos para acompañarte!</p>
-      <div class="contact-btns">
-        <a href="mailto:hola@arbola.com.ar" class="btn btn-fill-white">✉ hola@arbola.com.ar</a>
-        <a href="https://instagram.com/somosarbola" target="_blank" class="btn btn-ghost-white">Instagram @somosarbola →</a>
+
+      <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/hola@arbola.com.ar" method="POST">
+        <input type="hidden" name="_subject" value="Nuevo contacto desde la web de ÁRBOLA">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-nombre">Nombre y apellido</label>
+            <input id="cf-nombre" name="Nombre" type="text" required placeholder="Tu nombre" />
+          </div>
+          <div class="field">
+            <label for="cf-empresa">Empresa</label>
+            <input id="cf-empresa" name="Empresa" type="text" required placeholder="Nombre de tu empresa" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="Email" type="email" required placeholder="tu@email.com" />
+          </div>
+          <div class="field">
+            <label for="cf-tel">Teléfono <span class="opt">(opcional)</span></label>
+            <input id="cf-tel" name="Teléfono" type="tel" placeholder="+54 9 11 ..." />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cf-msg">Contanos sobre tu empresa y tus objetivos</label>
+          <textarea id="cf-msg" name="Mensaje" rows="5" required placeholder="Situación actual, qué querés mejorar, plazos, etc."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-fill-white form-submit" id="formSubmit">Enviar mensaje</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="contact-alt">
+        <span>O escribinos directo:</span>
+        <a href="mailto:hola@arbola.com.ar">✉ hola@arbola.com.ar</a>
+        <a href="https://instagram.com/somosarbola" target="_blank">Instagram @somosarbola →</a>
       </div>
     </div>
   </section>
@@ -475,6 +514,45 @@
     window.addEventListener('scroll', () => {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
     });
+  </script>
+
+  <script>
+    // ── FORMULARIO DE CONTACTO (Formsubmit AJAX, sin recargar la pagina) ──
+    const cForm = document.getElementById('contactForm');
+    if (cForm) {
+      const cStatus = document.getElementById('formStatus');
+      const cBtn = document.getElementById('formSubmit');
+      cForm.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        cStatus.className = 'form-status';
+        cStatus.textContent = '';
+        const label = cBtn.textContent;
+        cBtn.disabled = true;
+        cBtn.textContent = 'Enviando…';
+        try {
+          const res = await fetch(cForm.action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: new FormData(cForm)
+          });
+          if (res.ok) {
+            cForm.reset();
+            cStatus.className = 'form-status ok';
+            cStatus.textContent = '¡Gracias! Recibimos tu mensaje y te vamos a responder a la brevedad.';
+          } else {
+            const data = await res.json().catch(() => ({}));
+            cStatus.className = 'form-status err';
+            cStatus.textContent = data.message || 'No pudimos enviar el mensaje. Probá de nuevo o escribinos a hola@arbola.com.ar.';
+          }
+        } catch (err) {
+          cStatus.className = 'form-status err';
+          cStatus.textContent = 'Hubo un problema de conexión. Probá de nuevo o escribinos a hola@arbola.com.ar.';
+        } finally {
+          cBtn.disabled = false;
+          cBtn.textContent = label;
+        }
+      });
+    }
   </script>
 </body>
 </html>
