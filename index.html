@@ -232,6 +232,7 @@
         w: rnd(60, 140) * scale, h: rnd(7, 13) * scale, fill: rnd(0.2, 0.95), fillDir: Math.random() > 0.5 ? 1 : -1,  // gantt
         r: rnd(18, 40) * scale, progress: rnd(0.2, 0.9),                            // donut / arc
         pSlices: [rnd(10,35), rnd(10,35), rnd(10,35), rnd(10,35)],                  // pie
+        pieRot: rnd(0, Math.PI*2), pieVr: rnd(0.0009, 0.0022) * (Math.random() > 0.5 ? 1 : -1),  // giro del pie
         len: rnd(30, 65) * scale, rot: rnd(0, Math.PI*2), vrot: rnd(-0.003,0.003),  // arrow
         size: rnd(14, 30) * scale,                                                   // check / kpi
         tlW: rnd(80,180)*scale, rows: (function(){ const n = Math.floor(rnd(2,5)); const a = []; for (let i=0;i<n;i++) a.push({ progress: rnd(0.15,0.85), dir: Math.random()>0.5?1:-1, jade: Math.random()>0.5 }); return a; })(),  // timeline
@@ -279,7 +280,7 @@
     function drawPie(e) {
       const total = e.pSlices.reduce((a,b) => a+b, 0);
       const pieC  = [C.naranja, C.teal, C.jade, C.crema];
-      let angle = -Math.PI/2;
+      let angle = e.pieRot;
       ctx.save(); ctx.globalAlpha = e.alpha;
       e.pSlices.forEach((s, i) => {
         const sweep = (s/total) * Math.PI * 2;
@@ -385,6 +386,7 @@
         e.pushY += (ty - e.pushY) * 0.12;
 
         if (e.type === 'arrow') e.rot += e.vrot;
+        if (e.type === 'pie') e.pieRot += e.pieVr;
         if (e.type === 'gantt') {
           e.fill += 0.0008 * e.fillDir;
           if (e.fill > 0.97 || e.fill < 0.05) e.fillDir *= -1;
