@@ -236,6 +236,9 @@
         pieRot: rnd(0, Math.PI*2), pieVr: rnd(0.0009, 0.0022) * (Math.random() > 0.5 ? 1 : -1),  // giro del pie
         len: rnd(30, 65) * scale, rot: rnd(0, Math.PI*2), vrot: rnd(-0.003,0.003),  // arrow
         size: rnd(14, 30) * scale,                                                   // check / kpi
+        checkT: rnd(0, 2.0), checkSpd: rnd(0.004, 0.007),                            // check: dibujado ciclico del tilde
+        kpiBars: (function(){ const a=[]; for (let i=0;i<4;i++){ const v=rnd(0.3,0.85); a.push({ val:v, lo:Math.max(0.15,v-0.22), hi:Math.min(0.95,v+0.22), spd:rnd(0.0015,0.003), dir:Math.random()>0.5?1:-1 }); } return a; })(),  // kpi: barras vivas
+        kpiHi: Math.floor(rnd(0,4)),                                                 // kpi: barra resaltada (varia por elemento)
         tlW: rnd(80,180)*scale, rows: (function(){ const n = Math.floor(rnd(2,5)); const a = []; for (let i=0;i<n;i++) a.push({ progress: rnd(0.15,0.85), dir: Math.random()>0.5?1:-1, jade: Math.random()>0.5 }); return a; })(),  // timeline
         speed: rnd(0.0020, 0.0035), dir: Math.random() > 0.5 ? 1 : -1,
         pushX: 0, pushY: 0,
@@ -300,24 +303,38 @@
 
     function drawArrow(e) {
       ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(e.rot);
-      ctx.globalAlpha = e.alpha; ctx.strokeStyle = e.color; ctx.lineWidth = 1.5 * e.scale;
-      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(e.len, 0); ctx.stroke();
-      ctx.fillStyle = e.color;
-      const h = 6 * e.scale;
-      ctx.beginPath(); ctx.moveTo(e.len, 0); ctx.lineTo(e.len - h*1.5, -h*0.7); ctx.lineTo(e.len - h*1.5, h*0.7); ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = e.alpha; ctx.strokeStyle = e.color; ctx.fillStyle = e.color;
+      ctx.lineWidth = 1.8 * e.scale; ctx.lineCap = 'round';
+      const h = 7 * e.scale;
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(e.len - h, 0); ctx.stroke();   // termina antes de la punta
+      ctx.beginPath(); ctx.moveTo(e.len, 0); ctx.lineTo(e.len - h*1.6, -h*0.8); ctx.lineTo(e.len - h*1.6, h*0.8); ctx.closePath(); ctx.fill();
       ctx.restore();
     }
 
     function drawCheck(e) {
-      ctx.save(); ctx.translate(e.x, e.y); ctx.globalAlpha = e.alpha;
+      ctx.save(); ctx.translate(e.x, e.y);
       ctx.strokeStyle = e.color; ctx.lineWidth = 2 * e.scale; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      // circle
+      // circulo (siempre presente)
+      ctx.globalAlpha = e.alpha;
       ctx.beginPath(); ctx.arc(0, 0, e.size, 0, Math.PI*2); ctx.stroke();
-      // tick
-      ctx.beginPath();
-      ctx.moveTo(-e.size*0.4, 0);
-      ctx.lineTo(-e.size*0.1, e.size*0.38);
-      ctx.lineTo(e.size*0.45, -e.size*0.38);
+      // tilde: se dibuja progresivamente, se mantiene y se desvanece al reiniciar
+      let fade = 1;
+      if (e.checkT < 0.15)      fade = e.checkT / 0.15;
+      else if (e.checkT > 1.7)  fade = Math.max(0, (2.0 - e.checkT) / 0.3);
+      const p = Math.min(1, e.checkT);
+      ctx.globalAlpha = e.alpha * fade;
+      const P0 = [-e.size*0.4, 0], P1 = [-e.size*0.1, e.size*0.38], P2 = [e.size*0.45, -e.size*0.38];
+      const L1 = Math.hypot(P1[0]-P0[0], P1[1]-P0[1]), L2 = Math.hypot(P2[0]-P1[0], P2[1]-P1[1]);
+      const d = p * (L1 + L2);
+      ctx.beginPath(); ctx.moveTo(P0[0], P0[1]);
+      if (d <= L1) {
+        const t = d / L1;
+        ctx.lineTo(P0[0] + (P1[0]-P0[0])*t, P0[1] + (P1[1]-P0[1])*t);
+      } else {
+        ctx.lineTo(P1[0], P1[1]);
+        const t = (d - L1) / L2;
+        ctx.lineTo(P1[0] + (P2[0]-P1[0])*t, P1[1] + (P2[1]-P1[1])*t);
+      }
       ctx.stroke();
       ctx.restore();
     }
@@ -328,15 +345,14 @@
       // caja
       ctx.strokeStyle = e.color; ctx.lineWidth = 1.2 * e.scale;
       ctx.beginPath(); ctx.roundRect(-s, -s*0.6, s*2, s*1.2, 4); ctx.stroke();
-      // mini barras KPI
-      const bars = 4; const bw = (s*1.6/bars) * 0.65; const gap = (s*1.6/bars) * 0.35;
-      const heights = [0.3, 0.7, 0.5, 0.9];
+      // mini barras KPI (animadas, como datos en vivo)
+      const bars = e.kpiBars.length; const bw = (s*1.6/bars) * 0.65; const gap = (s*1.6/bars) * 0.35;
       for (let i = 0; i < bars; i++) {
-        const bh = s * 0.7 * heights[i];
+        const bh = s * 0.7 * e.kpiBars[i].val;
         const bx = -s*0.8 + i*(bw+gap);
         const by = s*0.35 - bh;
-        ctx.fillStyle = i === 3 ? C.naranja : e.color;
-        ctx.globalAlpha = e.alpha * (i === 3 ? 1 : 0.6);
+        ctx.fillStyle = i === e.kpiHi ? C.naranja : e.color;
+        ctx.globalAlpha = e.alpha * (i === e.kpiHi ? 1 : 0.6);
         ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 2); ctx.fill();
       }
       ctx.restore();
@@ -402,6 +418,16 @@
         if (e.type === 'donut') {
           e.progress += e.speed * e.dir;
           if (e.progress > 0.98 || e.progress < 0.05) e.dir *= -1;
+        }
+        if (e.type === 'check') {
+          e.checkT += e.checkSpd;        // 0..1 dibuja, 1..1.7 mantiene, 1.7..2 desvanece
+          if (e.checkT > 2.0) e.checkT = 0;
+        }
+        if (e.type === 'kpi') {
+          e.kpiBars.forEach(b => {
+            b.val += b.spd * b.dir;
+            if (b.val > b.hi || b.val < b.lo) b.dir *= -1;
+          });
         }
 
         // Dibujar aplicando el desplazamiento del mouse (sin alterar la posición base)
