@@ -164,42 +164,6 @@ a { text-decoration: none; color: inherit; }
     rgba(53, 90, 102, 0) 72%);
 }
 
-/* Formas animadas */
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  animation: linear infinite;
-  pointer-events: none;
-}
-.s1 { width: 700px; height: 700px; background: var(--azul); opacity: .75; top: -150px; left: -150px; animation: floatA 3s ease-in-out infinite; }
-.s2 { width: 480px; height: 480px; background: var(--naranja); opacity: .55; bottom: -100px; right: 5%; animation: floatB 3.5s ease-in-out infinite; }
-.s3 { width: 420px; height: 420px; background: var(--teal); opacity: .45; top: 25%; right: -80px; animation: floatC 4s ease-in-out infinite; }
-.s4 { width: 300px; height: 300px; background: var(--naranja); opacity: .35; top: 10%; left: 42%; animation: floatD 2.5s ease-in-out infinite; }
-
-@keyframes floatA {
-  0%   { transform: translate(0,0); }
-  50%  { transform: translate(300px, 250px); }
-  100% { transform: translate(0,0); }
-}
-@keyframes floatB {
-  0%   { transform: translate(0,0); }
-  50%  { transform: translate(-350px, -200px); }
-  100% { transform: translate(0,0); }
-}
-@keyframes floatC {
-  0%   { transform: translate(0,0); }
-  50%  { transform: translate(-280px, 200px); }
-  100% { transform: translate(0,0); }
-}
-@keyframes floatD {
-  0%   { transform: translate(0,0); }
-  50%  { transform: translate(250px, -200px); }
-  100% { transform: translate(0,0); }
-}
-
-.hero-deco { display: none; }
-
 .hero-inner {
   position: relative;
   z-index: 3;
@@ -290,13 +254,6 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--blanco);
 }
 .btn-fill-white:hover { background: var(--crema); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.18); }
-
-.btn-ghost-white {
-  background: transparent;
-  color: var(--blanco);
-  border-color: rgba(255,255,255,.4);
-}
-.btn-ghost-white:hover { border-color: var(--blanco); }
 
 /* ─── SECCIONES ─── */
 .sec { padding: 7rem 3.5rem; }
@@ -571,13 +528,6 @@ strong { font-weight: 600; }
   max-width: 520px;
   margin: 1.5rem auto 2.5rem;
 }
-.contact-btns {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 /* Formulario */
 .contact-form {
   max-width: 640px;
@@ -929,7 +879,6 @@ strong { font-weight: 600; }
   .stat:first-child { border-top: none; }
   .sec-grid-2  { gap: 2rem; }
   .values-bar  { display: none; }
-  .contact-btns { flex-direction: column; align-items: center; }
   .form-row    { flex-direction: column; gap: 0; }
   .contact-alt { flex-direction: column; gap: .6rem; }
   .team-grid   { grid-template-columns: 1fr; }
