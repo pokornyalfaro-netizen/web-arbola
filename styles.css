@@ -463,6 +463,78 @@ strong { font-weight: 600; }
   margin: 0;
 }
 
+/* Diagnóstico — la empresa como sistema */
+.diag-system { margin-top: 4.5rem; }
+.diag-system h3 { font-size: 1.5rem; font-weight: 700; color: var(--azul); margin-bottom: .6rem; }
+.diag-system-lead { max-width: 720px; color: var(--gris); margin-bottom: 2.5rem; }
+.diag-dims {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.diag-dim {
+  padding: 1.5rem;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-top: 3px solid var(--naranja);
+  border-radius: 12px;
+}
+.diag-dim h4 { font-size: 1rem; font-weight: 700; color: var(--azul); margin-bottom: .4rem; }
+.diag-dim p { font-size: .85rem; color: var(--gris); margin: 0; line-height: 1.5; }
+
+/* Diagnóstico — entregables y camino */
+.diag-deliver {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+  align-items: start;
+}
+.diag-deliver-box {
+  background: var(--azul);
+  color: var(--blanco);
+  border-radius: 14px;
+  padding: 2rem;
+}
+.diag-deliver-box h4 { font-size: 1rem; color: var(--blanco); margin-bottom: 1rem; letter-spacing: .5px; }
+.diag-deliver-box ul { list-style: none; margin: 0; padding: 0; }
+.diag-deliver-box li { position: relative; padding-left: 1.6rem; margin-bottom: .7rem; font-size: .95rem; }
+.diag-deliver-box li:last-child { margin-bottom: 0; }
+.diag-deliver-box li::before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+.diag-path h4 { font-size: 1rem; color: var(--azul); margin-bottom: 1.2rem; letter-spacing: .5px; }
+.diag-path ol { list-style: none; margin: 0; padding: 0; counter-reset: dpath; }
+.diag-path li {
+  position: relative;
+  padding-left: 2.6rem;
+  margin-bottom: 1.1rem;
+  color: var(--gris);
+  font-size: .92rem;
+  line-height: 1.5;
+  counter-increment: dpath;
+}
+.diag-path li:last-child { margin-bottom: 0; }
+.diag-path li::before {
+  content: counter(dpath);
+  position: absolute;
+  left: 0; top: -2px;
+  width: 1.8rem; height: 1.8rem;
+  background: var(--naranja);
+  color: var(--blanco);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 700;
+}
+.diag-path li strong { color: var(--azul); }
+.diag-quote {
+  margin: 3.5rem auto 0;
+  max-width: 720px;
+  text-align: center;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--azul);
+  line-height: 1.5;
+}
+
 /* ─── CONTACTO ─── */
 .contact-lead {
   font-size: 1.05rem;
@@ -783,6 +855,8 @@ strong { font-weight: 600; }
   .footer     { padding: 3rem 2rem 2rem; }
 
   .sec-grid-2          { grid-template-columns: 1fr; gap: 3rem; }
+  .diag-dims           { grid-template-columns: 1fr 1fr; }
+  .diag-deliver        { grid-template-columns: 1fr; }
   .stats-row           { grid-template-columns: 1fr 1fr; }
   .stat:nth-child(2)   { border-right: none; }
   .stat:nth-child(3)   { border-top: 1px solid var(--borde); }
@@ -811,6 +885,8 @@ strong { font-weight: 600; }
   .contact-alt { flex-direction: column; gap: .6rem; }
   .team-grid   { grid-template-columns: 1fr; }
   .team-detail { padding: 1.8rem; }
+  .diag-dims   { grid-template-columns: 1fr; }
+  .diag-quote  { font-size: 1.1rem; }
   .btn         { width: 100%; text-align: center; }
 }
 
