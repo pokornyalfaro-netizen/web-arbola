@@ -537,15 +537,31 @@ strong { font-weight: 600; }
   gap: 1.2rem;
 }
 .challenge {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
   background: var(--blanco);
   border: 1px solid var(--borde);
-  border-left: 3px solid var(--naranja);
-  border-radius: 10px;
-  padding: 1.3rem 1.4rem;
+  border-radius: 14px;
+  padding: 1.6rem;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.challenge:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.08);
+  border-color: rgba(220,121,69,.45);
+}
+.challenge-num {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--naranja);
+}
+.challenge-txt {
   font-size: .95rem;
   font-weight: 500;
   color: var(--azul);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* ─── CONTACTO ─── */
