@@ -102,12 +102,12 @@
       <div class="sec-label">Quiénes somos</div>
       <div class="sec-grid-2">
         <div>
-          <h2>Tres ingenieros que articulan técnica, gestión y estrategia</h2>
+          <h2>Ingenieros con experiencia real en obra y gestión</h2>
         </div>
         <div class="sec-body">
-          <p>ÁRBOLA es una consultora en gestión para PyMEs de la construcción y la industria, creada por <strong>Micaela, Germán y Vicente</strong>: tres ingenieros con recorridos complementarios en ingeniería, obra, industria y gestión, y formaciones en MBA y Dirección de Proyectos.</p>
-          <p>Compartimos una convicción: muchas PyMEs, para seguir avanzando, necesitan <strong>estructura, procesos y dirección</strong>. Acompañamos ese paso, ayudando a transformar experiencia en gestión y crecimiento en organización.</p>
-          <p>Trabajamos en <strong>Argentina y toda América</strong>, con soluciones adaptadas a cada realidad.</p>
+          <p>En ÁRBOLA acompañamos a empresas del sector para mejorar su organización, planificación y gestión con herramientas concretas y aplicables.</p>
+          <p>Buscamos transformar el proceso de gestión en una herramienta real para aquellas empresas que buscan crecer con mayor <strong>previsibilidad y solidez</strong>.</p>
+          <p>Trabajamos con empresas constructoras y de la industria en <strong>Argentina y toda América</strong>, con soluciones adaptadas a cada realidad.</p>
           <a href="#contacto" class="link-arrow">Hablemos →</a>
         </div>
       </div>
@@ -675,35 +675,17 @@
         '01': {
           title: 'Gestión y procesos',
           desc: 'Fortalecemos la gestión y los procesos internos de tu empresa para que opere con orden y eficiencia. Un enfoque práctico, cercano y aplicable, con herramientas concretas adaptadas a tu realidad.',
-          items: [
-            'Relevamiento y mapeo de los procesos actuales',
-            'Definición de roles, responsabilidades y flujos de trabajo',
-            'Estandarización y documentación de procedimientos',
-            'Indicadores de gestión (KPIs) para medir y mejorar',
-            'Implementación de herramientas de organización y seguimiento'
-          ]
+          items: []
         },
         '02': {
           title: 'Dirección de proyectos',
           desc: 'Acompañamos la dirección de tus obras y proyectos con planificación y control profesionales. Trabajamos codo a codo con tu equipo para generar resultados concretos y sostenidos en el tiempo.',
-          items: [
-            'Planificación de obra: cronogramas, hitos y recursos',
-            'Control de avance, costos y desvíos',
-            'Gestión de riesgos y soporte a la toma de decisiones',
-            'Coordinación de equipos, proveedores y contratistas',
-            'Reportes claros para la dirección'
-          ]
+          items: []
         },
         '03': {
           title: 'Capacitación',
           desc: 'Capacitamos a equipos de empresas y también a personas de forma individual que quieran formarse. Para dueños, profesionales o cualquiera que busque crecer en gestión y dirección de proyectos, con conocimientos técnicos y herramientas prácticas y aplicables.',
-          items: [
-            'Talleres y formación a medida para equipos de empresas',
-            'Capacitación individual abierta a cualquier persona que quiera desarrollarse',
-            'Formación en planificación y gestión de proyectos',
-            'Liderazgo y comunicación',
-            'Material y herramientas prácticas para aplicar desde el día uno'
-          ]
+          items: []
         }
       };
       const numEl = document.getElementById('serviceDetailNum');
@@ -716,6 +698,7 @@
         titleEl.textContent = s.title;
         descEl.textContent = s.desc;
         listEl.innerHTML = s.items.map(i => '<li>' + i + '</li>').join('');
+        listEl.hidden = s.items.length === 0;
         detail.hidden = false;
         detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
