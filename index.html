@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=16" />
+  <link rel="stylesheet" href="styles.css?v=17" />
 </head>
 <body>
 
@@ -76,6 +76,22 @@
         <div class="challenge">Crecimiento sin estructura que lo sostenga.</div>
         <div class="challenge">Roles y responsabilidades sin claridad.</div>
         <div class="challenge">Problemas de planificación y coordinación.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="sec sec-dark" id="resultados">
+    <div class="wrap">
+      <div class="sec-label sec-label-light">El cambio</div>
+      <h2>¿Qué cambia cuando una empresa mejora su gestión?</h2>
+      <div class="outcomes-grid">
+        <div class="outcome">Mejora su capacidad de planificar y dar seguimiento.</div>
+        <div class="outcome">Construye una base más firme para sostener su crecimiento.</div>
+        <div class="outcome">Mejora sus procesos y criterios de trabajo.</div>
+        <div class="outcome">Reduce la dependencia de pocas personas.</div>
+        <div class="outcome">Gana claridad en roles y responsabilidades.</div>
+        <div class="outcome">Toma decisiones con más información y dirección.</div>
       </div>
     </div>
   </section>
@@ -218,39 +234,6 @@
               <p>Un camino de acción claro, priorizado y realista.</p>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="diag-system">
-        <h3>Vemos la empresa como un sistema</h3>
-        <p class="diag-system-lead">El diagnóstico integra la mirada sobre la dirección, los procesos, las personas y la información, para comprender dónde se generan los desajustes y qué conviene ordenar primero.</p>
-        <div class="diag-dims">
-          <div class="diag-dim"><h4>Dirección y estrategia</h4><p>Objetivos, prioridades y criterios comunes para orientar decisiones.</p></div>
-          <div class="diag-dim"><h4>Procesos internos</h4><p>Flujos de trabajo, tareas repetidas, demoras y dependencias.</p></div>
-          <div class="diag-dim"><h4>Roles y responsabilidades</h4><p>Funciones, superposiciones, autonomías y responsables de gestión.</p></div>
-          <div class="diag-dim"><h4>Gestión de proyectos y operaciones</h4><p>Planificación, seguimiento, control y coordinación del trabajo.</p></div>
-          <div class="diag-dim"><h4>Información y documentación</h4><p>Registros, reportes e indicadores disponibles.</p></div>
-          <div class="diag-dim"><h4>Comunicación interna</h4><p>Reuniones, canales, acuerdos, responsables y seguimiento de temas.</p></div>
-        </div>
-      </div>
-
-      <div class="diag-deliver">
-        <div class="diag-deliver-box">
-          <h4>Qué recibís</h4>
-          <ul>
-            <li>Informe de diagnóstico</li>
-            <li>Contexto de la empresa</li>
-            <li>Modelo CANVAS</li>
-          </ul>
-        </div>
-        <div class="diag-path">
-          <h4>Cómo seguimos</h4>
-          <ol>
-            <li><strong>Diagnóstico.</strong> Entendemos el punto de partida.</li>
-            <li><strong>Priorización.</strong> Definimos qué ordenar primero y armamos un plan de acción.</li>
-            <li><strong>Implementación.</strong> Herramientas concretas para llevar el plan adelante de forma autónoma.</li>
-            <li><strong>Acompañamiento.</strong> Horas Opcionales ÁRBOLA (HOA): soporte flexible para revisar, ajustar y sostener las mejoras.</li>
-          </ol>
         </div>
       </div>
 
@@ -592,7 +575,7 @@
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.sec-label, h2, .sec-body, .stat, .service-card, .diag-step, .diag-dim, .challenge, .stat-item, .values-bar span').forEach(el => {
+    document.querySelectorAll('.sec-label, h2, .sec-body, .stat, .service-card, .diag-step, .outcome, .challenge, .stat-item, .values-bar span').forEach(el => {
       el.classList.add('reveal');
       observer.observe(el);
     });
