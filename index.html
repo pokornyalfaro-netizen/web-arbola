@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=16" />
 </head>
 <body>
 
@@ -64,18 +64,34 @@
     <span>Transparentes</span>
   </div>
 
+  <!-- DESAFÍOS -->
+  <section class="sec" id="desafios">
+    <div class="wrap">
+      <div class="sec-label">El momento</div>
+      <h2>¿Qué desafíos ayudamos a resolver?</h2>
+      <p class="desafios-lead">Muchas empresas crecen desde el esfuerzo, la capacidad de resolver y la urgencia. Pero llega un momento en el que seguir avanzando exige algo más: <strong>estructura, claridad y gestión</strong>. Ahí aparecen desafíos como:</p>
+      <div class="challenge-grid">
+        <div class="challenge">Decisiones urgentes que reemplazan a la gestión.</div>
+        <div class="challenge">Falta de procesos y criterios de trabajo claros.</div>
+        <div class="challenge">Crecimiento sin estructura que lo sostenga.</div>
+        <div class="challenge">Roles y responsabilidades sin claridad.</div>
+        <div class="challenge">Problemas de planificación y coordinación.</div>
+      </div>
+    </div>
+  </section>
+
   <!-- QUIÉNES SOMOS -->
   <section class="sec" id="quienes-somos">
     <div class="wrap">
       <div class="sec-label">Quiénes somos</div>
       <div class="sec-grid-2">
         <div>
-          <h2>Ingenieros con experiencia real en obra y gestión</h2>
+          <h2>Tres ingenieros que articulan técnica, gestión y estrategia</h2>
         </div>
         <div class="sec-body">
-          <p>En ÁRBOLA acompañamos a empresas del sector para mejorar su organización, planificación y gestión con herramientas concretas y aplicables.</p>
-          <p>Buscamos transformar el proceso de gestión en una herramienta real para aquellas empresas que buscan crecer con mayor <strong>previsibilidad y solidez</strong>.</p>
-          <p>Trabajamos con empresas constructoras y de la industria en <strong>Argentina y toda América</strong>, con soluciones adaptadas a cada realidad.</p>
+          <p>ÁRBOLA es una consultora en gestión para PyMEs de la construcción y la industria, creada por <strong>Micaela, Germán y Vicente</strong>: tres ingenieros con recorridos complementarios en ingeniería, obra, industria y gestión, y formaciones en MBA y Dirección de Proyectos.</p>
+          <p>Compartimos una convicción: muchas PyMEs, para seguir avanzando, necesitan <strong>estructura, procesos y dirección</strong>. Acompañamos ese paso, ayudando a transformar experiencia en gestión y crecimiento en organización.</p>
+          <p>Trabajamos en <strong>Argentina y toda América</strong>, con soluciones adaptadas a cada realidad.</p>
           <a href="#contacto" class="link-arrow">Hablemos →</a>
         </div>
       </div>
@@ -576,7 +592,7 @@
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.sec-label, h2, .sec-body, .stat, .service-card, .diag-step, .stat-item, .values-bar span').forEach(el => {
+    document.querySelectorAll('.sec-label, h2, .sec-body, .stat, .service-card, .diag-step, .diag-dim, .challenge, .stat-item, .values-bar span').forEach(el => {
       el.classList.add('reveal');
       observer.observe(el);
     });

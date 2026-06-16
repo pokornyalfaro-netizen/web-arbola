@@ -535,6 +535,25 @@ strong { font-weight: 600; }
   line-height: 1.5;
 }
 
+/* ─── DESAFÍOS ─── */
+.desafios-lead { max-width: 720px; color: var(--gris); margin: 1.2rem 0 2.5rem; }
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+.challenge {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-left: 3px solid var(--naranja);
+  border-radius: 10px;
+  padding: 1.3rem 1.4rem;
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--azul);
+  line-height: 1.4;
+}
+
 /* ─── CONTACTO ─── */
 .contact-lead {
   font-size: 1.05rem;
@@ -857,6 +876,7 @@ strong { font-weight: 600; }
   .sec-grid-2          { grid-template-columns: 1fr; gap: 3rem; }
   .diag-dims           { grid-template-columns: 1fr 1fr; }
   .diag-deliver        { grid-template-columns: 1fr; }
+  .challenge-grid      { grid-template-columns: 1fr 1fr; }
   .stats-row           { grid-template-columns: 1fr 1fr; }
   .stat:nth-child(2)   { border-right: none; }
   .stat:nth-child(3)   { border-top: 1px solid var(--borde); }
@@ -887,6 +907,7 @@ strong { font-weight: 600; }
   .team-detail { padding: 1.8rem; }
   .diag-dims   { grid-template-columns: 1fr; }
   .diag-quote  { font-size: 1.1rem; }
+  .challenge-grid { grid-template-columns: 1fr; }
   .btn         { width: 100%; text-align: center; }
 }
 
