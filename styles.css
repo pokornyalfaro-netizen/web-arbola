@@ -75,6 +75,20 @@ a { text-decoration: none; color: inherit; }
 .navbar.scrolled .nav-cta { border-color: var(--azul) !important; color: var(--azul) !important; }
 .navbar.scrolled .nav-cta:hover { background: var(--azul); color: var(--blanco) !important; }
 
+/* Menú activo (scrollspy) */
+.nav-links a { position: relative; }
+.nav-links a.active,
+.navbar.scrolled .nav-links a.active { color: var(--naranja); }
+.nav-links a:not(.nav-cta).active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -8px;
+  height: 2px;
+  background: var(--naranja);
+  border-radius: 2px;
+}
+.mobile-menu a.active { color: var(--naranja); }
+
 .menu-toggle {
   display: none;
   flex-direction: column;

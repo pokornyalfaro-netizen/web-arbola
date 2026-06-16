@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=21" />
 </head>
 <body>
 
@@ -141,8 +141,8 @@
           <span class="stat-l">Soluciones a medida</span>
         </div>
         <div class="stat">
-          <span class="stat-n">Free</span>
-          <span class="stat-l">Primera reunión sin costo</span>
+          <span class="stat-n">Sin costo</span>
+          <span class="stat-l">La primera reunión</span>
         </div>
       </div>
 
@@ -789,6 +789,26 @@
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showMember(card.getAttribute('data-member')); }
         });
       });
+    })();
+  </script>
+
+  <script>
+    // ── MENÚ INTELIGENTE (scrollspy: resalta la sección activa) ──
+    (function() {
+      const links = document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]');
+      if (!links.length) return;
+      const map = {};
+      links.forEach(a => { const id = a.getAttribute('href'); (map[id] = map[id] || []).push(a); });
+      const ids = ['#inicio', '#quienes-somos', '#que-hacemos', '#diagnostico', '#contacto'];
+      const sections = ids.map(id => document.querySelector(id)).filter(Boolean);
+      function setActive(id) {
+        links.forEach(a => a.classList.remove('active'));
+        (map[id] || []).forEach(a => a.classList.add('active'));
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) setActive('#' + e.target.id); });
+      }, { rootMargin: '-50% 0px -50% 0px' });
+      sections.forEach(s => obs.observe(s));
     })();
   </script>
 </body>
