@@ -9,7 +9,7 @@
   <title>ÁRBOLA — Consultoría de Gestión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=13" />
+  <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
 
@@ -99,6 +99,39 @@
         <div class="stat">
           <span class="stat-n">Free</span>
           <span class="stat-l">Primera reunión sin costo</span>
+        </div>
+      </div>
+
+      <!-- NUESTRO EQUIPO -->
+      <div class="team">
+        <h3 class="team-title">Nuestro equipo</h3>
+        <p class="team-intro">ÁRBOLA tiene un equipo de ingenieros con experiencia en construcción, industria y gestión de proyectos, que acompaña a PyMEs a crecer con orden, eficiencia y visión sistémica.</p>
+        <div class="team-grid">
+          <div class="team-card" data-member="german" role="button" tabindex="0">
+            <div class="team-photo"><img src="img/equipo/german.jpg" alt="Germán Cabral" onerror="this.style.display='none'" /><span class="team-initials">GC</span></div>
+            <h4>Germán Cabral</h4>
+            <p>Ingeniero Civil · Dirección de Proyectos</p>
+            <span class="card-link">Ver perfil →</span>
+          </div>
+          <div class="team-card" data-member="micaela" role="button" tabindex="0">
+            <div class="team-photo"><img src="img/equipo/micaela.jpg" alt="Micaela Pokorny" onerror="this.style.display='none'" /><span class="team-initials">MP</span></div>
+            <h4>Micaela Pokorny</h4>
+            <p>Ingeniera Civil · Dirección de Proyectos</p>
+            <span class="card-link">Ver perfil →</span>
+          </div>
+          <div class="team-card" data-member="vicente" role="button" tabindex="0">
+            <div class="team-photo"><img src="img/equipo/vicente.jpg" alt="Vicente Constantino Pizzorno" onerror="this.style.display='none'" /><span class="team-initials">VP</span></div>
+            <h4>Vicente Constantino Pizzorno</h4>
+            <p>Ingeniero Mecánico y Electromecánico · MBA</p>
+            <span class="card-link">Ver perfil →</span>
+          </div>
+        </div>
+
+        <div class="team-detail" id="teamDetail" hidden>
+          <h3 id="teamDetailName"></h3>
+          <p class="team-detail-roles" id="teamDetailRoles"></p>
+          <p id="teamDetailBio"></p>
+          <a id="teamDetailLinkedin" class="btn btn-fill" href="#" target="_blank" rel="noopener" hidden>Ver perfil en LinkedIn ↗</a>
         </div>
       </div>
     </div>
@@ -658,6 +691,53 @@
         card.addEventListener('click', () => showService(card.getAttribute('data-service')));
         card.addEventListener('keydown', e => {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showService(card.getAttribute('data-service')); }
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    // ── PERFILES DEL EQUIPO (se amplía al tocar la tarjeta) ──
+    (function() {
+      const detail = document.getElementById('teamDetail');
+      if (!detail) return;
+      const data = {
+        german: {
+          name: 'Germán Cabral',
+          roles: ['Ingeniero Civil', 'Mg. en Dirección de Proyectos y MBA'],
+          bio: 'Ingeniero Civil con Máster en Dirección de Proyectos y MBA. Combina la técnica de obra con la gestión estratégica para acompañar a las empresas en su profesionalización.',
+          linkedin: ''
+        },
+        micaela: {
+          name: 'Micaela Pokorny',
+          roles: ['Ingeniera Civil', 'Mg. en Dirección de Proyectos', 'Adscripta en FADU-UNMDP'],
+          bio: 'Ingeniera Civil y Magíster en Dirección de Proyectos. Adscripta en FADU-UNMDP, suma a ÁRBOLA la planificación y la gestión con una fuerte impronta académica y práctica.',
+          linkedin: ''
+        },
+        vicente: {
+          name: 'Vicente Constantino Pizzorno',
+          roles: ['Ingeniero Mecánico y Electromecánico', 'MBA', 'Ayudante en FI-UNLP'],
+          bio: 'Ingeniero Mecánico y Electromecánico con MBA. Ayudante en FI-UNLP, aporta la mirada de la industria y los procesos para potenciar la eficiencia de cada empresa.',
+          linkedin: ''
+        }
+      };
+      const nameEl = document.getElementById('teamDetailName');
+      const rolesEl = document.getElementById('teamDetailRoles');
+      const bioEl = document.getElementById('teamDetailBio');
+      const liEl = document.getElementById('teamDetailLinkedin');
+      function showMember(id) {
+        const m = data[id]; if (!m) return;
+        nameEl.textContent = m.name;
+        rolesEl.textContent = m.roles.join('  ·  ');
+        bioEl.textContent = m.bio;
+        if (m.linkedin) { liEl.href = m.linkedin; liEl.hidden = false; } else { liEl.hidden = true; }
+        detail.hidden = false;
+        detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      document.querySelectorAll('[data-member]').forEach(card => {
+        card.addEventListener('click', () => showMember(card.getAttribute('data-member')));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showMember(card.getAttribute('data-member')); }
         });
       });
     })();
