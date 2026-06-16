@@ -399,22 +399,26 @@ strong { font-weight: 600; }
 .service-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
+  gap: 1.5rem;
   margin-top: 3.5rem;
-  border-top: 1px solid rgba(255,255,255,.15);
 }
 
 .service-card {
-  padding: 2.8rem 2.5rem 2.8rem 0;
-  border-right: 1px solid rgba(255,255,255,.12);
+  padding: 2rem;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   gap: .8rem;
-  transition: background .2s;
+  cursor: pointer;
+  transition: transform .25s ease, background .25s ease, border-color .25s ease;
 }
-.service-card:not(:first-child) { padding-left: 2.5rem; }
-.service-card:last-child { border-right: none; padding-right: 0; }
-.service-card:hover { background: rgba(255,255,255,.04); }
+.service-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.28);
+}
 
 .service-num {
   font-size: .7rem;
@@ -863,8 +867,6 @@ strong { font-weight: 600; }
   .stat:nth-child(3)   { border-top: 1px solid var(--borde); }
   .stat:nth-child(4)   { border-top: 1px solid var(--borde); border-right: none; }
   .service-grid        { grid-template-columns: 1fr; }
-  .service-card        { padding: 2rem 0 !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,.12); }
-  .service-card:last-child { border-bottom: none; }
   .footer-top          { flex-direction: column; }
 }
 
@@ -896,12 +898,13 @@ strong { font-weight: 600; }
 /* ─── SCROLL REVEAL ─── */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .6s ease, transform .6s ease;
+  transform: translateY(32px);
+  transition: opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
+  will-change: opacity, transform;
 }
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* Delays escalonados */
@@ -917,6 +920,23 @@ strong { font-weight: 600; }
 .diag-step:nth-child(1) { transition-delay: .0s; }
 .diag-step:nth-child(2) { transition-delay: .15s; }
 .diag-step:nth-child(3) { transition-delay: .3s; }
+
+.challenge:nth-child(1) { transition-delay: .0s; }
+.challenge:nth-child(2) { transition-delay: .08s; }
+.challenge:nth-child(3) { transition-delay: .16s; }
+.challenge:nth-child(4) { transition-delay: .24s; }
+.challenge:nth-child(5) { transition-delay: .32s; }
+
+.outcome:nth-child(1) { transition-delay: .0s; }
+.outcome:nth-child(2) { transition-delay: .08s; }
+.outcome:nth-child(3) { transition-delay: .16s; }
+.outcome:nth-child(4) { transition-delay: .24s; }
+.outcome:nth-child(5) { transition-delay: .32s; }
+.outcome:nth-child(6) { transition-delay: .4s; }
+
+.team-card:nth-child(1) { transition-delay: .0s; }
+.team-card:nth-child(2) { transition-delay: .12s; }
+.team-card:nth-child(3) { transition-delay: .24s; }
 
 /* Cursor personalizado en hero */
 .hero { cursor: crosshair; }

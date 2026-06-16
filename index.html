@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=22" />
+  <link rel="stylesheet" href="styles.css?v=23" />
 </head>
 <body>
 
@@ -585,13 +585,16 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
+          const el = e.target;
+          el.classList.add('visible');
+          observer.unobserve(el);
+          // al terminar la entrada, quitar las clases para no frenar el hover de las cards
+          el.addEventListener('transitionend', () => el.classList.remove('reveal', 'visible'), { once: true });
         }
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.sec-label, h2, .sec-body, .stat, .service-card, .diag-step, .outcome, .challenge, .stat-item, .values-bar span').forEach(el => {
+    document.querySelectorAll('.sec-label, h2, .sec-body, .stat, .service-card, .diag-step, .outcome, .challenge, .team-card, .stat-item, .values-bar span').forEach(el => {
       el.classList.add('reveal');
       observer.observe(el);
     });
