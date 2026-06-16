@@ -293,19 +293,9 @@ h2 {
 .sec-dark h2  { color: var(--blanco); }
 .sec-accent h2 { color: var(--blanco); }
 
-p { color: var(--gris); line-height: 1.75; margin-bottom: .9rem; }
+p { color: var(--gris); line-height: 1.75; margin-bottom: .9rem; text-wrap: pretty; }
 .sec-dark p  { color: rgba(255,255,255,.75); }
 .sec-accent p { color: rgba(255,255,255,.8); }
-
-/* Texto de párrafos largos justificado */
-.sec-body p,
-.desafios-lead,
-.team-intro,
-.service-detail > p,
-.team-detail > p,
-#diagnostico .sec-grid-2 > div:first-child p {
-  text-align: justify;
-}
 
 strong { font-weight: 600; }
 .sec-dark strong  { color: var(--teal); }
