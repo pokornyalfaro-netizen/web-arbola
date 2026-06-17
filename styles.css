@@ -136,7 +136,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--azul);
   display: flex;
   align-items: flex-end;
-  padding: 0 3.5rem 7rem;
+  padding: 120px 3.5rem 7rem;
   overflow: hidden;
 }
 
@@ -849,7 +849,7 @@ strong { font-weight: 600; }
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .sec        { padding: 5rem 2rem; }
-  .hero       { padding: 0 2rem 5rem; }
+  .hero       { padding: 100px 2rem 5rem; }
   .navbar     { padding: 0.7rem 2rem; }
   .logo-img   { height: 60px; }
   .values-bar { padding: 1rem 2rem; gap: 1rem; }
@@ -871,7 +871,7 @@ strong { font-weight: 600; }
   .menu-toggle { display: flex; }
   .logo-img    { height: 50px; }
   .hero-inner h1 { font-size: 2rem; }
-  .hero        { padding: 0 1.5rem 4rem; }
+  .hero        { padding: 90px 1.5rem 4rem; }
   .hero-tag    { font-size: .65rem; }
   .hero-sub    { font-size: .95rem; }
   .stats-row   { grid-template-columns: 1fr; }
