@@ -191,7 +191,8 @@ a { text-decoration: none; color: inherit; }
 
 .hero-sub {
   font-size: 1.05rem;
-  font-weight: 300;
+  font-weight: 400;
+  font-style: italic;
   opacity: .8;
   max-width: 540px;
   margin-bottom: 2.8rem;
