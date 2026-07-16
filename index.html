@@ -4,12 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google tag (gtag.js) — Google Analytics 4 -->
+  <!-- Google tag (gtag.js) — Google Analytics 4 + Consent Mode v2 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBPW84SX4E"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
+    // Consent Mode v2: por defecto denegado hasta que la persona decida
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
+    });
+    // Respetar la decisión guardada previamente
+    try {
+      if (localStorage.getItem('arbola_cookie_consent') === 'accepted') {
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      }
+    } catch (e) {}
+
     gtag('config', 'G-CBPW84SX4E');
   </script>
 
@@ -33,7 +48,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=29" />
+  <link rel="stylesheet" href="styles.css?v=30" />
 </head>
 <body>
 
@@ -829,6 +844,49 @@
         entries.forEach(e => { if (e.isIntersecting) setActive('#' + e.target.id); });
       }, { rootMargin: '-50% 0px -50% 0px' });
       sections.forEach(s => obs.observe(s));
+    })();
+  </script>
+
+  <!-- Banner de cookies -->
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+    <div class="cookie-banner-inner">
+      <p class="cookie-text">
+        Usamos cookies propias y de Google Analytics para entender cómo se usa el sitio y mejorarlo.
+        Podés aceptarlas o rechazarlas cuando quieras.
+      </p>
+      <div class="cookie-actions">
+        <button type="button" class="btn-cookie btn-cookie-reject" id="cookie-reject">Rechazar</button>
+        <button type="button" class="btn-cookie btn-cookie-accept" id="cookie-accept">Aceptar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var KEY = 'arbola_cookie_consent';
+      var banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+      function show() {
+        banner.hidden = false;
+        requestAnimationFrame(function () { banner.classList.add('is-visible'); });
+      }
+      function hide() {
+        banner.classList.remove('is-visible');
+        setTimeout(function () { banner.hidden = true; }, 350);
+      }
+      var choice = null;
+      try { choice = localStorage.getItem(KEY); } catch (e) {}
+      if (choice !== 'accepted' && choice !== 'rejected') { show(); }
+
+      document.getElementById('cookie-accept').addEventListener('click', function () {
+        try { localStorage.setItem(KEY, 'accepted'); } catch (e) {}
+        if (typeof gtag === 'function') { gtag('consent', 'update', { 'analytics_storage': 'granted' }); }
+        hide();
+      });
+      document.getElementById('cookie-reject').addEventListener('click', function () {
+        try { localStorage.setItem(KEY, 'rejected'); } catch (e) {}
+        if (typeof gtag === 'function') { gtag('consent', 'update', { 'analytics_storage': 'denied' }); }
+        hide();
+      });
     })();
   </script>
 </body>
